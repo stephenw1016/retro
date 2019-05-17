@@ -3,12 +3,12 @@ const HtmlWebPackPlugin = require('html-webpack-plugin');
 module.exports = {
 
   entry: {
-    app: './src/app/index.js',
-    vendor: './src/app/vendor.js',
+    app: './src/app/index',
+    vendor: './src/app/vendor',
   },
 
   resolve: {
-    extensions: ['.js']
+    extensions: ['.js', '.jsx']
   },
 
   module: {
@@ -19,7 +19,7 @@ module.exports = {
         use: { loader: 'babel-loader' },
       },
       {
-        test: /\.js$/,
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: ['babel-loader', 'eslint-loader']
       },

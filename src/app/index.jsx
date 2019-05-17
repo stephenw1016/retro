@@ -1,11 +1,12 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { HashRouter } from 'react-router-dom';
+import 'babel-polyfill';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
-import { Vote } from './components/vote';
+import Session from './components/session/Session';
 
 const App = () => (
   <HashRouter>
@@ -16,7 +17,7 @@ const App = () => (
         </Typography>
       </Toolbar>
     </AppBar>
-    <Vote />
+    <Session name="Test Session" />
   </HashRouter>
 );
 
