@@ -1,7 +1,10 @@
 // @flow
 import React from 'react';
+import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import { withStyles } from '@material-ui/core/styles';
 import { Paper, Typography } from '@material-ui/core';
+
+import { firebaseAuth, uiConfig } from '../../../firebase';
 
 type Props = {
   classes: any,
@@ -19,7 +22,7 @@ const Login = (props: Props) => {
       >
         Login
       </Typography>
-      <div id="firebaseui-auth-container" />
+      <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebaseAuth} />
     </Paper>
   );
 };

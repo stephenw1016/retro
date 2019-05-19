@@ -1,6 +1,4 @@
 // @flow
-import * as firebase from 'firebase';
-import * as firebaseui from 'firebaseui';
 import React from 'react';
 import { render } from 'react-dom';
 import { HashRouter, Route, Link } from 'react-router-dom';
@@ -12,35 +10,10 @@ import Button from '@material-ui/core/Button';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
-import { firebaseConfig } from '../firebase/index';
 import Home from './components/home/Home';
 import Login from './components/login/Login';
 import Session from './components/session/Session';
 import SignUp from './components/signup/SignUp';
-
-//
-
-firebase.initializeApp(firebaseConfig);
-
-const uiConfig = {
-  signInSuccessUrl: '<url-to-redirect-to-on-success>',
-  signInOptions: [
-    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-    firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-    firebase.auth.TwitterAuthProvider.PROVIDER_ID,
-    firebase.auth.GithubAuthProvider.PROVIDER_ID,
-    firebase.auth.EmailAuthProvider.PROVIDER_ID,
-  ],
-  tosUrl: '/#/tos',
-  privacyPolicyUrl: () => {
-    window.location.assign('/#/privacy-policy');
-  },
-};
-
-const ui = new firebaseui.auth.AuthUI(firebase.auth());
-ui.start('#firebaseui-auth-container', uiConfig);
-
-//
 
 type Props = {
   classes: any,
@@ -65,7 +38,7 @@ const App = (props: Props) => {
           <Button component={Link} color="inherit" to="/signup">Sign Up</Button>
         </Toolbar>
       </AppBar>
-      <Route path="/" exact component={Login} />
+      <Route path="/login" exact component={Login} />
       <Route path="/home" exact component={Home} />
       <Route path="/signup" exact component={SignUp} />
       <Route path="/sessions" exact component={Session} />
