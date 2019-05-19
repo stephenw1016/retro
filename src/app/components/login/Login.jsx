@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { Paper } from '@material-ui/core';
+import { Paper, Typography } from '@material-ui/core';
 
 type Props = {
   classes: any,
@@ -12,13 +12,25 @@ const Login = (props: Props) => {
 
   return (
     <Paper className={classes.root}>
-      Login Page
+      <Typography
+        className={classes.title}
+        align="center"
+        variant="h3"
+      >
+        Login
+      </Typography>
+      <div id="firebaseui-auth-container" />
     </Paper>
   );
 };
 
-const styles = () => ({
-  root: {},
+const styles = theme => ({
+  root: {
+    height: '100%',
+  },
+  title: {
+    padding: theme.spacing.unit,
+  },
 });
 
 export default withStyles(styles)(Login);

@@ -16,3 +16,8 @@ import 'recharts';
 
 // Material UI
 import '@material-ui/core';
+
+// Firebase
+import 'firebase/auth';
+import 'firebase/database';
+import 'firebase/storage';
