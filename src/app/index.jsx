@@ -9,8 +9,9 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { UserContext } from './context/user';
 import Header from './components/header/Header';
 import Home from './components/home/Home';
-import SignIn from './components/sign-in/SignIn';
+import NewSessionForm from './components/session/NewSessionForm';
 import Session from './components/session/Session';
+import SignIn from './components/sign-in/SignIn';
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -32,6 +33,7 @@ const App = () => {
         <Route path="/sign-in" exact component={SignIn} />
         <Route path="/home" exact component={Home} />
         <Route path="/sessions" exact component={Session} />
+        <Route path="/new-session" exact component={NewSessionForm} />
       </HashRouter>
     </UserContext.Provider>
   );

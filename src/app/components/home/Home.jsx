@@ -18,7 +18,7 @@ const Home = (props: Props) => {
         color="secondary"
         component={Link}
         size="large"
-        to="/sessions"
+        to="/new-session"
         variant="contained"
       >
         New Session
