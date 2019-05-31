@@ -1,10 +1,10 @@
 // @flow
-import React from 'react';
+import React, { useContext } from 'react';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import { withStyles } from '@material-ui/core/styles';
 import { Grid, Paper, Typography } from '@material-ui/core';
 
-import { firebaseAuth, uiConfig } from '../../../firebase';
+import { FirebaseContext } from '../../context/firebase-context';
 
 type Props = {
   classes: any,
@@ -12,6 +12,20 @@ type Props = {
 
 const SignIn = (props: Props) => {
   const { classes } = props;
+  const firebase = useContext(FirebaseContext);
+
+  const uiConfig = {
+    signInFlow: 'popup',
+    signInSuccessUrl: '/#/home',
+    signInOptions: [
+      firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+      firebase.auth.EmailAuthProvider.PROVIDER_ID,
+    ],
+    tosUrl: '/#/tos',
+    privacyPolicyUrl: () => {
+      window.location.assign('/#/privacy-policy');
+    },
+  };
 
   return (
     <Paper className={classes.root}>
@@ -26,7 +40,7 @@ const SignIn = (props: Props) => {
           </Typography>
         </Grid>
         <Grid item xs={12} sm={6}>
-          <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebaseAuth} />
+          <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
         </Grid>
       </Grid>
     </Paper>

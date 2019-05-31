@@ -1,7 +1,6 @@
 // @flow
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import * as firebase from 'firebase';
 import { withStyles } from '@material-ui/core/styles';
 import {
   AppBar,
@@ -17,7 +16,7 @@ import {
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import SignOutIcon from '@material-ui/icons/ExitToApp';
 
-import { UserContext } from '../../context/user';
+import { FirebaseContext } from '../../context/firebase-context';
 
 type Props = {
   classes: any,
@@ -25,9 +24,20 @@ type Props = {
 
 const Header = (props: Props) => {
   const { classes } = props;
-  const user = useContext(UserContext);
+
+  const firebase = useContext(FirebaseContext);
+  const [user, setUser] = useState(null);
   const [anchorEl, setAnchorEl] = useState(null);
   const [isSignedOut, setIsSignedOut] = useState(false);
+
+  useEffect(() => {
+    const authListener = firebase.auth().onAuthStateChanged((userChange) => {
+      console.log('setting user:', user);
+      setUser(userChange);
+    });
+
+    return authListener;
+  }, [user]);
 
   const handleAvatarClick = (e) => {
     setAnchorEl(e.currentTarget);
