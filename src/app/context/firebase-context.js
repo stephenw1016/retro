@@ -11,13 +11,11 @@ const firebaseConfig = {
   storageBucket: process.env.STORAGE_BUCKET,
 };
 
-const FirebaseContext = React.createContext(null);
-
-export default class Firebase {
+class Firebase {
   constructor() {
     firebase.initializeApp(firebaseConfig);
     this.auth = firebase.auth;
   }
 }
 
-export { FirebaseContext };
+export const FirebaseContext = React.createContext(new Firebase());

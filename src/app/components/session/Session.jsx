@@ -1,6 +1,5 @@
 // @flow
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { withStyles } from '@material-ui/core/styles';
 import { CircularProgress, Paper, Typography } from '@material-ui/core';
 
@@ -25,7 +24,9 @@ const Session = (props: Props) => {
       setIsLoading(true);
 
       try {
-        const { data } = await axios('../../../../data/categories.json');
+        const response = await fetch('../../../../data/categories.json');
+        const data = await response.json();
+
         if (!ignore) {
           setCategories(data);
         }

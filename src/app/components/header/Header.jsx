@@ -1,6 +1,6 @@
 // @flow
-import React, { useContext, useEffect, useState } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import React, { useContext, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import {
   AppBar,
@@ -16,6 +16,7 @@ import {
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import SignOutIcon from '@material-ui/icons/ExitToApp';
 
+import { useAuth } from '../../hooks/useAuth';
 import { FirebaseContext } from '../../context/firebase-context';
 
 type Props = {
@@ -24,20 +25,9 @@ type Props = {
 
 const Header = (props: Props) => {
   const { classes } = props;
-
   const firebase = useContext(FirebaseContext);
-  const [user, setUser] = useState(null);
   const [anchorEl, setAnchorEl] = useState(null);
-  const [isSignedOut, setIsSignedOut] = useState(false);
-
-  useEffect(() => {
-    const authListener = firebase.auth().onAuthStateChanged((userChange) => {
-      console.log('setting user:', user);
-      setUser(userChange);
-    });
-
-    return authListener;
-  }, [user]);
+  const user = useAuth();
 
   const handleAvatarClick = (e) => {
     setAnchorEl(e.currentTarget);
@@ -50,12 +40,7 @@ const Header = (props: Props) => {
   const handleSignOut = () => {
     firebase.auth().signOut();
     setAnchorEl(null);
-    setIsSignedOut(true);
   };
-
-  if (isSignedOut) {
-    return <Redirect to="/sign-in" />;
-  }
 
   return (
     <AppBar position="static" color="primary">
@@ -101,9 +86,7 @@ const Header = (props: Props) => {
               </MenuItem>
             </Menu>
           </>
-        ) : (
-          <Button component={Link} color="inherit" to="/sign-in">Sign In</Button>
-        )}
+        ) : <Button component={Link} color="inherit" to="/sign-in">Sign In</Button>}
       </Toolbar>
     </AppBar>
   );
