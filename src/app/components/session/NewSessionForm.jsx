@@ -1,6 +1,8 @@
 // @flow
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import MomentUtils from '@date-io/moment';
+import { DatePicker, MuiPickersUtilsProvider } from 'material-ui-pickers';
 import { withStyles } from '@material-ui/core/styles';
 import {
   CircularProgress,
@@ -24,6 +26,7 @@ const NewSessionForm = (props: Props) => {
 
   const [team, setTeam] = useState({});
   const [teams, setTeams] = useState([]);
+  const [selectedDate, handleDateChange] = useState(new Date());
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
@@ -81,6 +84,9 @@ const NewSessionForm = (props: Props) => {
                 </Select>
                 <FormHelperText>Choose a team for your retrospective.</FormHelperText>
               </FormControl>
+              <MuiPickersUtilsProvider utils={MomentUtils}>
+                <DatePicker value={selectedDate} onChange={handleDateChange} />
+              </MuiPickersUtilsProvider>
             </Paper>
           </Grid>
         </Grid>
