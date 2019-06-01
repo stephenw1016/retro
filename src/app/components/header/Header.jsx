@@ -46,7 +46,13 @@ const Header = (props: Props) => {
   return (
     <AppBar position="static" color="primary">
       <Toolbar>
-        <Typography className={classes.grow} variant="title" color="inherit">
+        <Typography
+          className={classes.branding}
+          color="inherit"
+          variant="title"
+          component={Link}
+          to={routes.HOME}
+        >
           Retro
         </Typography>
         {user ? (
@@ -103,8 +109,9 @@ const styles = (theme) => {
       height: avatarSize,
       width: avatarSize,
     },
-    grow: {
+    branding: {
       flexGrow: 1,
+      textDecoration: 'none',
     },
     userName: {
       cursor: 'pointer',

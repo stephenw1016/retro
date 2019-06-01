@@ -11,6 +11,7 @@ import Home from './components/home/Home';
 import NewSessionForm from './components/session/NewSessionForm';
 import Session from './components/session/Session';
 import SignIn from './components/sign-in/SignIn';
+import UserProfile from './components/user-profile/UserProfile';
 import { routes } from './constants';
 
 const App = () => (
@@ -21,6 +22,7 @@ const App = () => (
     <AuthorizedRoute path={routes.HOME} exact component={Home} />
     <AuthorizedRoute path={routes.SESSIONS} exact component={Session} />
     <AuthorizedRoute path={routes.NEW_SESSION} exact component={NewSessionForm} />
+    <AuthorizedRoute path={routes.USER_PROFILE} exact component={UserProfile} />
   </HashRouter>
 );
 
