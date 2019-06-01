@@ -1,0 +1,66 @@
+[
+  {
+    "id": "session-1",
+    "name": "Laser Team Retrospective",
+    "date": "1/1/2019",
+    "teamId": "team-1",
+    "categories": [
+      {
+        "categoryId": "category-1",
+        "votes": [
+          { "userId": "user-1", "value": -2, "comment": "" },
+          { "userId": "user-2", "value": -1, "comment": "" },
+          { "userId": "user-3", "value": -2, "comment": "" }
+        ]
+      },
+      {
+        "categoryId": "category-2",
+        "votes": [
+          { "userId": "user-1", "value": 0, "comment": "" },
+          { "userId": "user-2", "value": 1, "comment": "" },
+          { "userId": "user-3", "value": 1, "comment": "" }
+        ]
+      },
+      {
+        "categoryId": "category-3",
+        "votes": [
+          { "userId": "user-1", "value": 2, "comment": "" },
+          { "userId": "user-2", "value": 2, "comment": "" },
+          { "userId": "user-3", "value": 2, "comment": "" }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "session-2",
+    "name": "Laser Team Retrospective",
+    "date": "1/14/2019",
+    "teamId": "team-1",
+    "categories": [
+      {
+        "categoryId": "category-1",
+        "votes": [
+          { "userId": "user-1", "value": -1, "comment": "" },
+          { "userId": "user-2", "value": -1, "comment": "" },
+          { "userId": "user-3", "value": -1, "comment": "" }
+        ]
+      },
+      {
+        "categoryId": "category-2",
+        "votes": [
+          { "userId": "user-1", "value": 1, "comment": "" },
+          { "userId": "user-2", "value": 2, "comment": "" },
+          { "userId": "user-3", "value": 1, "comment": "" }
+        ]
+      },
+      {
+        "categoryId": "category-3",
+        "votes": [
+          { "userId": "user-1", "value": 1, "comment": "" },
+          { "userId": "user-2", "value": 2, "comment": "" },
+          { "userId": "user-3", "value": 2, "comment": "" }
+        ]
+      }
+    ]
+  }
+]

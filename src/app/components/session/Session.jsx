@@ -47,8 +47,7 @@ const Session = (props: Props) => {
       {isLoading ? <CircularProgress /> : (
         <>
           <Typography variant="h3">{name}</Typography>
-          {Object.values(categories)
-            .map(category => <Vote key={category.title} category={category} />)}
+          {categories.map(category => <Vote key={category.title} category={category} />)}
         </>
       )}
     </Paper>

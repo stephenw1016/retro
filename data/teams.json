@@ -1,32 +1,23 @@
 [
   {
-    "id": "id-1",
+    "id": "team-1",
     "name": "Team 1",
-    "admin": "steve",
-    "members": [{
-      "username": "steve",
-      "email": "steve@steve.com"
-    }, {
-      "username": "alicia",
-      "email": "alicia@alicia.com"
-    }, {
-      "username": "jameson",
-      "email": "jameson@jameson.com"
-    }]
+    "members": [
+      { "id": "user-1", "isAdmin": true },
+      { "id": "user-2", "isAdmin": false },
+      { "id": "user-3", "isAdmin": false }
+    ]
   },
   {
-    "id": "id-2",
+    "id": "team-2",
     "name": "Team 2",
-    "admin": "chi",
-    "members": [{
-      "username": "steve",
-      "email": "steve@steve.com"
-    }, {
-      "username": "alicia",
-      "email": "alicia@alicia.com"
-    }, {
-      "username": "jameson",
-      "email": "jameson@jameson.com"
-    }]
+    "members": [
+      { "id": "user-1", "isAdmin": true },
+      { "id": "user-2", "isAdmin": true },
+      { "id": "user-3", "isAdmin": false },
+      { "id": "user-4", "isAdmin": false },
+      { "id": "user-5", "isAdmin": false },
+      { "id": "user-6", "isAdmin": false }
+    ]
   }
 ]

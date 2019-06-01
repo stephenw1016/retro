@@ -1,26 +1,26 @@
-{
-  "deliveringValue": {
+[
+  {
+    "id": "category-1",
     "title": "Delivering Value",
-    "shortTitle": "Delivering Value",
     "description": {
       "positive": "We deliver great stuff! We're proud of it and our stakeholders are really happy.",
       "negative": "We do not deliver value to our stakeholders. We feel ashamed of our work."
     }
   },
-  "support": {
+  {
+    "id": "category-2",
     "title": "Support",
-    "shortTitle": "Support",
     "description": {
       "positive": "We always get great support and help when we ask for it which keeps us going.",
       "negative": "We keep getting stuck because we can't get the help and support that we need."
     }
   },
-  "teamwork": {
+  {
+    "id": "category-3",
     "title": "Teamwork",
-    "shortTitle": "Teamwork",
     "description": {
       "positive": "We are a totally gelled super-team with awesome collaboration and alignment.",
       "negative": "We are a bunch of individuals that do not know what others in the squad are doing."
     }
   }
-}
+]
