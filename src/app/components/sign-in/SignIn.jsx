@@ -5,6 +5,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { Grid, Paper, Typography } from '@material-ui/core';
 
 import { FirebaseContext } from '../../context/firebase-context';
+import { routes } from '../../constants';
 
 type Props = {
   classes: any,
@@ -16,14 +17,14 @@ const SignIn = (props: Props) => {
 
   const uiConfig = {
     signInFlow: 'popup',
-    signInSuccessUrl: '/#/home',
+    signInSuccessUrl: `/#${routes.HOME}`,
     signInOptions: [
       firebase.auth.GoogleAuthProvider.PROVIDER_ID,
       firebase.auth.EmailAuthProvider.PROVIDER_ID,
     ],
-    tosUrl: '/#/tos',
+    tosUrl: `/#${routes.TERMS_OF_SERVICE}`,
     privacyPolicyUrl: () => {
-      window.location.assign('/#/privacy-policy');
+      window.location.assign(`/#${routes.PRIVACY_POLICY}`);
     },
   };
 

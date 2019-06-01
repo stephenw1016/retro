@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import { Button, Paper } from '@material-ui/core';
 
+import { routes } from '../../constants';
+
 type Props = {
   classes: any,
 };
@@ -18,7 +20,7 @@ const Home = (props: Props) => {
         color="secondary"
         component={Link}
         size="large"
-        to="/new-session"
+        to={routes.NEW_SESSION}
         variant="contained"
       >
         New Session
@@ -28,7 +30,7 @@ const Home = (props: Props) => {
         color="secondary"
         component={Link}
         size="large"
-        to="/sessions"
+        to={routes.SESSIONS}
         variant="contained"
       >
         Join Session

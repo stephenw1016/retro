@@ -18,6 +18,7 @@ import SignOutIcon from '@material-ui/icons/ExitToApp';
 
 import { useAuth } from '../../hooks/useAuth';
 import { FirebaseContext } from '../../context/firebase-context';
+import { routes } from '../../constants';
 
 type Props = {
   classes: any,
@@ -72,7 +73,7 @@ const Header = (props: Props) => {
               open={Boolean(anchorEl)}
               onClose={handleMenuClose}
             >
-              <MenuItem onClick={handleMenuClose} component={Link} to="/sessions">
+              <MenuItem onClick={handleMenuClose} component={Link} to={routes.USER_PROFILE}>
                 <ListItemIcon>
                   <AccountCircleIcon />
                 </ListItemIcon>
@@ -86,7 +87,7 @@ const Header = (props: Props) => {
               </MenuItem>
             </Menu>
           </>
-        ) : <Button component={Link} color="inherit" to="/sign-in">Sign In</Button>}
+        ) : <Button component={Link} color="inherit" to={routes.SIGN_IN}>Sign In</Button>}
       </Toolbar>
     </AppBar>
   );
