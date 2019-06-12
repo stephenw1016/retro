@@ -3,7 +3,6 @@
     "id": "session-1",
     "name": "Laser Team Retrospective",
     "date": "1/1/2019",
-    "teamId": "team-1",
     "categories": [
       {
         "categoryId": "category-1",
@@ -35,7 +34,6 @@
     "id": "session-2",
     "name": "Laser Team Retrospective",
     "date": "1/14/2019",
-    "teamId": "team-1",
     "categories": [
       {
         "categoryId": "category-1",

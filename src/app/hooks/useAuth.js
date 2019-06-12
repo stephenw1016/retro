@@ -3,7 +3,7 @@ import { FirebaseContext } from '../context/firebase-context';
 
 export const useAuth = () => {
   const firebase = useContext(FirebaseContext);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(firebase.auth());
 
   useEffect(() => {
     const authListener = firebase.auth().onAuthStateChanged((userChange) => {

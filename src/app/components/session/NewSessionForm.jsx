@@ -1,21 +1,27 @@
 // @flow
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import MomentUtils from '@date-io/moment';
-import { DatePicker, MuiPickersUtilsProvider } from 'material-ui-pickers';
+import React, { useEffect, useState } from 'react';
 import { withStyles } from '@material-ui/core/styles';
+import format from 'date-fns/format';
+import uuid from 'uuid';
 import {
+  Button,
+  Checkbox,
   CircularProgress,
   Grid,
   Paper,
   FormControl,
   FormHelperText,
+  IconButton,
   Input,
   InputLabel,
-  MenuItem,
-  Select,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemSecondaryAction,
+  ListItemText,
   Typography,
 } from '@material-ui/core';
+import InfoIcon from '@material-ui/icons/Info';
 
 type Props = {
   classes: any,
@@ -23,75 +29,140 @@ type Props = {
 
 const NewSessionForm = (props: Props) => {
   const { classes } = props;
-
-  const [team, setTeam] = useState({});
-  const [teams, setTeams] = useState([]);
-  const [selectedDate, handleDateChange] = useState(new Date());
+  const [name, setName] = useState('New Session');
+  const [date, setDate] = useState(format(new Date(), 'YYYY-MM-DD'));
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
   useEffect(() => {
     let ignore = false;
 
-    async function fetchTeams() {
+    const fetchCategories = async () => {
       setIsError(false);
       setIsLoading(true);
 
       try {
-        // TODO: get teams available to signed in user.
-        const { data } = await axios('../../../../data/teams.json');
+        const response = await fetch('../../../../data/categories.json');
+        const data = await response.json();
+
         if (!ignore) {
-          setTeams(data);
+          setCategories(data);
         }
       } catch (error) {
         setIsError(true);
       }
 
       setIsLoading(false);
-    }
+    };
 
-    fetchTeams();
+    fetchCategories();
     return () => { ignore = true; };
   }, []);
 
-  const handleTeamChange = (e) => {
-    setTeam(e.target.value);
+  const handleNameChange = (e) => {
+    setName(e.target.value);
+  };
+
+  const handleDateChange = (e) => {
+    setDate(e.target.value);
+  };
+
+  const handleCategoryToggle = id => () => {
+    console.log(id);
+    const currentIndex = selectedCategories.indexOf(id);
+    console.log(currentIndex);
+    const newSelectedCategories = [...selectedCategories];
+
+    if (currentIndex === -1) {
+      newSelectedCategories.push(id);
+    } else {
+      newSelectedCategories.splice(currentIndex, 1);
+    }
+
+    setSelectedCategories(newSelectedCategories);
+    console.log(newSelectedCategories);
+  };
+
+  const handleStartSession = () => {
+    const newSession = {
+      id: uuid.v4(),
+      name,
+      date,
+      categories: selectedCategories.map(c => ({ id: c, votes: [] })),
+    };
+    console.log('NEW SESSION CREATED', newSession);
   };
 
   return (
-    <div>
+    <Paper className={classes.root}>
       {isError && <div>Something went wrong ...</div>}
       {isLoading ? <CircularProgress /> : (
-        <Grid container alignContent="center" justify="center">
-          <Grid item xs={12} sm={6}>
-            <Paper className={classes.root}>
-              <Grid item xs={12}>
-                <Typography variant="h5">
-                  New Session
-                </Typography>
-              </Grid>
-              <FormControl className={classes.formControl}>
-                <InputLabel htmlFor="teamSelect" shrink>Team</InputLabel>
-                <Select
-                  value={team}
-                  onChange={handleTeamChange}
-                  input={<Input name="team" id="teamSelect" />}
-                >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  {teams.map(({ id, name }) => <MenuItem key={id} value={id}>{name}</MenuItem>)}
-                </Select>
-                <FormHelperText>Choose a team for your retrospective.</FormHelperText>
+        <>
+          <Typography variant="h5">
+            New Session
+          </Typography>
+          <Grid className={classes.form} container alignItems="center" justify="center" spacing={24}>
+
+            <Grid item xs={12}>
+              <FormControl fullWidth>
+                <InputLabel htmlFor="nameInput" shrink>Name</InputLabel>
+                <Input id="nameInput" type="text" value={name} onChange={handleNameChange} />
+                <FormHelperText>The name for your session.</FormHelperText>
               </FormControl>
-              <MuiPickersUtilsProvider utils={MomentUtils}>
-                <DatePicker value={selectedDate} onChange={handleDateChange} />
-              </MuiPickersUtilsProvider>
-            </Paper>
+            </Grid>
+
+            <Grid item xs={12}>
+              <FormControl fullWidth>
+                <InputLabel shrink>Date</InputLabel>
+                <Input type="date" value={date} onChange={handleDateChange} />
+                <FormHelperText>The date your session takes place.</FormHelperText>
+              </FormControl>
+            </Grid>
+
+            <Grid item xs={12}>
+              <FormControl fullWidth>
+                <InputLabel htmlFor="categorySelect" shrink>Categories</InputLabel>
+                <List id="categorySelect">
+                  {categories.map(({ id, title }) => {
+                    const labelId = `checkbox-list-label-${id}`;
+
+                    return (
+                      <ListItem key={id} dense button onClick={handleCategoryToggle(id)} divider>
+                        <ListItemIcon>
+                          <Checkbox
+                            edge="start"
+                            checked={selectedCategories.includes(id)}
+                            tabIndex={-1}
+                            disableRipple
+                            inputProps={{ 'aria-labelledby': labelId }}
+                          />
+                        </ListItemIcon>
+                        <ListItemText id={labelId} primary={title} />
+                        <ListItemSecondaryAction>
+                          <IconButton edge="end" aria-label="Description">
+                            <InfoIcon />
+                          </IconButton>
+                        </ListItemSecondaryAction>
+                      </ListItem>
+                    );
+                  })}
+                </List>
+                <FormHelperText>Select the categories that your team will vote on.</FormHelperText>
+              </FormControl>
+            </Grid>
+
+            <Grid className={classes.actions} item xs={12}>
+              <Button color="primary" variant="contained" onClick={handleStartSession}>
+                Start Session
+              </Button>
+            </Grid>
+
           </Grid>
-        </Grid>
+        </>
       )}
-    </div>
+    </Paper>
   );
 };
 
@@ -100,7 +171,12 @@ const styles = theme => ({
     height: '100%',
     padding: theme.spacing.unit * 2,
   },
-  formControl: {
+  actions: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
+  form: {
+    padding: `${theme.spacing.unit * 2}px 0`,
   },
   title: {
     padding: theme.spacing.unit,

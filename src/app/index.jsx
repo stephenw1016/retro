@@ -18,6 +18,7 @@ const App = () => (
   <HashRouter>
     <CssBaseline />
     <Header />
+    <AuthorizedRoute path="/" exact component={Home} />
     <Route path={routes.SIGN_IN} exact component={SignIn} />
     <AuthorizedRoute path={routes.HOME} exact component={Home} />
     <AuthorizedRoute path={routes.SESSIONS} exact component={Session} />

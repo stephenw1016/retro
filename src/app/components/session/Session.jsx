@@ -19,7 +19,7 @@ const Session = (props: Props) => {
   useEffect(() => {
     let ignore = false;
 
-    async function fetchCategories() {
+    const fetchCategories = async () => {
       setIsError(false);
       setIsLoading(true);
 
@@ -35,7 +35,7 @@ const Session = (props: Props) => {
       }
 
       setIsLoading(false);
-    }
+    };
 
     fetchCategories();
     return () => { ignore = true; };
