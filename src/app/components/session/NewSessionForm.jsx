@@ -70,9 +70,7 @@ const NewSessionForm = (props: Props) => {
   };
 
   const handleCategoryToggle = id => () => {
-    console.log(id);
     const currentIndex = selectedCategories.indexOf(id);
-    console.log(currentIndex);
     const newSelectedCategories = [...selectedCategories];
 
     if (currentIndex === -1) {
@@ -82,7 +80,6 @@ const NewSessionForm = (props: Props) => {
     }
 
     setSelectedCategories(newSelectedCategories);
-    console.log(newSelectedCategories);
   };
 
   const handleStartSession = () => {
