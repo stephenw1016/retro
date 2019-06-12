@@ -112,8 +112,8 @@ const NewSessionForm = (props: Props) => {
 
             <Grid item xs={12}>
               <FormControl fullWidth>
-                <InputLabel shrink>Date</InputLabel>
-                <Input type="date" value={date} onChange={handleDateChange} />
+                <InputLabel htmlFor="dateInput" shrink>Date</InputLabel>
+                <Input id="dateInput" type="date" value={date} onChange={handleDateChange} />
                 <FormHelperText>The date your session takes place.</FormHelperText>
               </FormControl>
             </Grid>
