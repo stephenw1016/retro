@@ -16,13 +16,15 @@ import {
 
 import CategorySelect from './CategorySelect';
 import { useCategories } from '../../hooks/useCategories';
+import { routes } from '../../constants';
 
 type Props = {
   classes: any,
+  history: any,
 };
 
 const NewSessionForm = (props: Props) => {
-  const { classes } = props;
+  const { classes, history } = props;
   const [name, setName] = useState('New Session');
   const [date, setDate] = useState(format(new Date(), 'YYYY-MM-DD'));
   const [selectedCategoryIds, setSelectedCategoryIds] = useState([]);
@@ -43,7 +45,9 @@ const NewSessionForm = (props: Props) => {
   const handleStartSession = () => {
     const sessionCategories = selectedCategoryIds.map(c => ({ id: c, votes: [] }));
     const newSession = { id: uuid.v4(), name, date, categories: sessionCategories };
-    console.log('NEW SESSION CREATED', newSession);
+    console.log('new session', newSession);
+    // history.push(`${routes.SESSIONS}/${newSession.id}`);
+    history.push(`${routes.SESSIONS}/session-1`);
   };
 
   const commonTextFieldProps = {
