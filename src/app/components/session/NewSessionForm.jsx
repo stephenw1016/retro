@@ -1,6 +1,5 @@
 // @flow
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { withStyles } from '@material-ui/core/styles';
 import format from 'date-fns/format';
 import uuid from 'uuid';
@@ -16,6 +15,7 @@ import {
 } from '@material-ui/core';
 
 import CategorySelect from './CategorySelect';
+import { useCategories } from '../../hooks/useCategories';
 
 type Props = {
   classes: any,
@@ -26,37 +26,11 @@ const NewSessionForm = (props: Props) => {
   const [name, setName] = useState('New Session');
   const [date, setDate] = useState(format(new Date(), 'YYYY-MM-DD'));
   const [selectedCategoryIds, setSelectedCategoryIds] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
+  const [categories, isError, isLoading] = useCategories();
 
   useEffect(() => {
-    let ignore = false;
-
-    const fetchCategories = async () => {
-      setIsError(false);
-      setIsLoading(true);
-
-      try {
-        if (!ignore) {
-          const { data } = await axios('../../../../data/categories.json');
-          setCategories(data);
-          setSelectedCategoryIds(data.map(({ id }) => id));
-        }
-      } catch (error) {
-        setIsError(true);
-        console.error(error);
-      }
-
-      setIsLoading(false);
-    };
-
-    fetchCategories();
-
-    return () => {
-      ignore = true;
-    };
-  }, []);
+    setSelectedCategoryIds(categories.map(({ id }) => id));
+  }, [categories]);
 
   const handleNameChange = (e) => {
     setName(e.target.value);
