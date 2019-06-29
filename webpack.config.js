@@ -2,6 +2,8 @@ const HtmlWebPackPlugin = require('html-webpack-plugin');
 const DotenvPlugin = require('dotenv-webpack');
 
 module.exports = {
+  devtool: 'cheap-module-eval-source-map',
+
   entry: {
     app: './src/app/index',
     vendor: './src/app/vendor',
@@ -11,13 +13,10 @@ module.exports = {
     extensions: ['.js', '.jsx']
   },
 
+  mode: 'development',
+
   module: {
     rules: [
-      {
-        test: /\.(js|jsx)$/,
-        exclude: /node_modules/,
-        use: { loader: 'babel-loader' },
-      },
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
@@ -28,6 +27,10 @@ module.exports = {
         use: { loader: 'html-loader', options: { minimize: true } },
       }
     ]
+  },
+
+  optimization: {
+    usedExports: true,
   },
 
   plugins: [

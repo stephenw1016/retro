@@ -1,27 +1,22 @@
 // @flow
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { withStyles } from '@material-ui/core/styles';
 import format from 'date-fns/format';
 import uuid from 'uuid';
 import {
   Button,
-  Checkbox,
   CircularProgress,
   Grid,
   Paper,
   FormControl,
   FormHelperText,
-  IconButton,
   Input,
   InputLabel,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemSecondaryAction,
-  ListItemText,
   Typography,
 } from '@material-ui/core';
-import InfoIcon from '@material-ui/icons/Info';
+
+import CategorySelect from './CategorySelect';
 
 type Props = {
   classes: any,
@@ -31,7 +26,7 @@ const NewSessionForm = (props: Props) => {
   const { classes } = props;
   const [name, setName] = useState('New Session');
   const [date, setDate] = useState(format(new Date(), 'YYYY-MM-DD'));
-  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [selectedCategoryIds, setSelectedCategoryIds] = useState([]);
   const [categories, setCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -44,21 +39,23 @@ const NewSessionForm = (props: Props) => {
       setIsLoading(true);
 
       try {
-        const response = await fetch('../../../../data/categories.json');
-        const data = await response.json();
-
         if (!ignore) {
+          const { data } = await axios('../../../../data/categories.json');
           setCategories(data);
         }
       } catch (error) {
         setIsError(true);
+        console.error(error);
       }
 
       setIsLoading(false);
     };
 
     fetchCategories();
-    return () => { ignore = true; };
+
+    return () => {
+      ignore = true;
+    };
   }, []);
 
   const handleNameChange = (e) => {
@@ -69,32 +66,19 @@ const NewSessionForm = (props: Props) => {
     setDate(e.target.value);
   };
 
-  const handleCategoryToggle = id => () => {
-    const currentIndex = selectedCategories.indexOf(id);
-    const newSelectedCategories = [...selectedCategories];
-
-    if (currentIndex === -1) {
-      newSelectedCategories.push(id);
-    } else {
-      newSelectedCategories.splice(currentIndex, 1);
-    }
-
-    setSelectedCategories(newSelectedCategories);
-  };
-
   const handleStartSession = () => {
     const newSession = {
       id: uuid.v4(),
       name,
       date,
-      categories: selectedCategories.map(c => ({ id: c, votes: [] })),
+      categories: selectedCategoryIds.map(c => ({ id: c, votes: [] })),
     };
     console.log('NEW SESSION CREATED', newSession);
   };
 
   return (
     <Paper className={classes.root}>
-      {isError && <div>Something went wrong ...</div>}
+      {isError && <div>Something went wrong...</div>}
       {isLoading ? <CircularProgress /> : (
         <>
           <Typography variant="h5">
@@ -121,31 +105,11 @@ const NewSessionForm = (props: Props) => {
             <Grid item xs={12}>
               <FormControl fullWidth>
                 <InputLabel htmlFor="categorySelect" shrink>Categories</InputLabel>
-                <List id="categorySelect">
-                  {categories.map(({ id, title }) => {
-                    const labelId = `checkbox-list-label-${id}`;
-
-                    return (
-                      <ListItem key={id} dense button onClick={handleCategoryToggle(id)} divider>
-                        <ListItemIcon>
-                          <Checkbox
-                            edge="start"
-                            checked={selectedCategories.includes(id)}
-                            tabIndex={-1}
-                            disableRipple
-                            inputProps={{ 'aria-labelledby': labelId }}
-                          />
-                        </ListItemIcon>
-                        <ListItemText id={labelId} primary={title} />
-                        <ListItemSecondaryAction>
-                          <IconButton edge="end" aria-label="Description">
-                            <InfoIcon />
-                          </IconButton>
-                        </ListItemSecondaryAction>
-                      </ListItem>
-                    );
-                  })}
-                </List>
+                <CategorySelect
+                  categories={categories}
+                  selectedCategoryIds={selectedCategoryIds}
+                  onChange={setSelectedCategoryIds}
+                />
                 <FormHelperText>Select the categories that your team will vote on.</FormHelperText>
               </FormControl>
             </Grid>
