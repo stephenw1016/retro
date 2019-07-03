@@ -5,7 +5,7 @@ import 'react-router-dom';
 
 // Redux
 import 'redux';
-import 'redux-logger';
+import 'react-redux';
 import 'redux-thunk';
 
 // HTTP
@@ -20,4 +20,3 @@ import '@material-ui/core';
 // Firebase
 import 'firebase/auth';
 import 'firebase/database';
-import 'firebase/storage';
