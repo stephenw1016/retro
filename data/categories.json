@@ -1,26 +1,79 @@
-[
-  {
-    "id": "category-1",
-    "title": "Delivering Value",
+{
+  "2NfeV8v5VfnJeDhQqFl8": {
     "description": {
-      "positive": "We deliver great stuff! We're proud of it and our stakeholders are really happy.",
-      "negative": "We do not deliver value to our stakeholders. We feel ashamed of our work."
-    }
+      "negative": "We do not deliver value to our stakeholders. We feel ashamed of our work.",
+      "positive": "We deliver great stuff! We're proud of it and our stakeholders are really happy."
+    },
+    "title": "Delivering Value"
   },
-  {
-    "id": "category-2",
-    "title": "Support",
+  "33YmhdcR9aZR0c2KjjSy": {
     "description": {
-      "positive": "We always get great support and help when we ask for it which keeps us going.",
-      "negative": "We keep getting stuck because we can't get the help and support that we need."
-    }
+      "negative": "We never seem to get anything done. We keep getting stuck or interrupted.",
+      "positive": "We get stuff done really quickly, no waiting around and no unnecessary delays."
+    },
+    "title": "Speed"
   },
-  {
-    "id": "category-3",
-    "title": "Teamwork",
+  "8jhsNRqf01QuPGsLOOPy": {
     "description": {
-      "positive": "We are a totally gelled super-team with awesome collaboration and alignment.",
-      "negative": "We are a bunch of individuals that do not know what others in the squad are doing."
-    }
+      "negative": "We are a bunch of individuals that do not know what others in the squad are doing.",
+      "positive": "We are a totally gelled super-team with awesome collaboration and alignment."
+    },
+    "title": "Teamwork"
+  },
+  "B9k4sqomqI3ukdPZbuYX": {
+    "description": {
+      "negative": "We keep getting stuck because we can't get the help and support that we need.",
+      "positive": "We always get great support and help when we ask for it which keeps us going."
+    },
+    "title": "Support"
+  },
+  "G3Kj5ls8xqAZQoRZ3YsB": {
+    "description": {
+      "negative": "I don't like going to work and it's not much fun working here.",
+      "positive": "We love going to work and have lots of fun working together."
+    },
+    "title": "Fun"
+  },
+  "GvnxeOzZhi8scJAhEVPp": {
+    "description": {
+      "negative": "Releasing is risky, painful, requires manual work and takes forever.",
+      "positive": "Releasing is simple, safe, painless and mostly automated."
+    },
+    "title": "Easy to Release"
+  },
+  "IQ37eBNDQDPzGeg3iJGH": {
+    "description": {
+      "negative": "Our way of working does not suit us.",
+      "positive": "Our way of working fits us perfectly."
+    },
+    "title": "Suitable Process"
+  },
+  "JXFZuf9dbO6A0jHbFaie": {
+    "description": {
+      "negative": "We're just pawns in a game of chess with no influence of what we build or how we build.",
+      "positive": "We are in control of our destiny. We know exactly what to build and how to build it."
+    },
+    "title": "Autonomy"
+  },
+  "NQFGPojMAqR3tRFnf9jL": {
+    "description": {
+      "negative": "Our code is a pile of dung and technical debt is raging out of control.",
+      "positive": "We are proud of our code. It's clean, easy to read and has great test coverage."
+    },
+    "title": "Code Quality"
+  },
+  "p6m3Ivm9uCRGJmKQNe8X": {
+    "description": {
+      "negative": "We never have the time to learn any new tech, skills, or methods.",
+      "positive": "We are learning lots of interesting stuff all the time."
+    },
+    "title": "Learning"
+  },
+  "zgnnvzenFKOoShA6e11q": {
+    "description": {
+      "negative": "There is no high-level picture or focus. Our so called mission is uninspiring and unclear.",
+      "positive": "We know exactly why we are here and we're really excited about it."
+    },
+    "title": "Mission"
   }
-]
+}

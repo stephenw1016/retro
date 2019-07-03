@@ -47,7 +47,7 @@ const NewSessionForm = (props: Props) => {
     const newSession = { id: uuid.v4(), name, date, categories: sessionCategories };
     console.log('new session', newSession);
     // history.push(`${routes.SESSIONS}/${newSession.id}`);
-    history.push(`${routes.SESSIONS}/session-1`);
+    history.push(`${routes.SESSION}/session-1`);
   };
 
   const commonTextFieldProps = {
