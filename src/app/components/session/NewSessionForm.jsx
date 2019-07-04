@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import format from 'date-fns/format';
-import uuid from 'uuid';
 import {
   Button,
   CircularProgress,
@@ -26,6 +25,7 @@ type Props = {
 const NewSessionForm = (props: Props) => {
   const { classes, history } = props;
   const [name, setName] = useState('New Session');
+  const [organization, setOrganization] = useState('');
   const [date, setDate] = useState(format(new Date(), 'YYYY-MM-DD'));
   const [selectedCategoryIds, setSelectedCategoryIds] = useState([]);
   const [categories, isError, isLoading] = useCategories();
@@ -38,13 +38,27 @@ const NewSessionForm = (props: Props) => {
     setName(e.target.value);
   };
 
+  const handleOrganizationChange = (e) => {
+    setOrganization(e.target.value);
+  };
+
   const handleDateChange = (e) => {
     setDate(e.target.value);
   };
 
   const handleStartSession = () => {
-    const sessionCategories = selectedCategoryIds.map(c => ({ id: c, votes: [] }));
-    const newSession = { id: uuid.v4(), name, date, categories: sessionCategories };
+    const sessionCategories = selectedCategoryIds.map((id) => {
+      const category = categories.find(c => c.id === id);
+      return { ...category, id, votes: [] };
+    });
+
+    const newSession = {
+      name,
+      organization,
+      date,
+      categories: sessionCategories,
+    };
+
     console.log('new session', newSession);
     // history.push(`${routes.SESSIONS}/${newSession.id}`);
     history.push(`${routes.SESSION}/session-1`);
@@ -54,7 +68,6 @@ const NewSessionForm = (props: Props) => {
     fullWidth: true,
     InputLabelProps: { shrink: true },
     margin: 'dense',
-    required: true,
   };
 
   if (isError) {
@@ -71,9 +84,10 @@ const NewSessionForm = (props: Props) => {
         New Session
       </Typography>
       <Grid className={classes.form} container alignItems="center" justify="center" spacing={24}>
-        <Grid item xs={12} sm={8}>
+        <Grid item xs={12} sm={12}>
           <TextField
             {...commonTextFieldProps}
+            required
             id="nameInput"
             label="Name"
             helperText="The name for your session."
@@ -82,9 +96,20 @@ const NewSessionForm = (props: Props) => {
             onChange={handleNameChange}
           />
         </Grid>
-        <Grid item xs={12} sm={4}>
+        <Grid item xs={12} sm={12}>
           <TextField
             {...commonTextFieldProps}
+            id="organizationInput"
+            label="Organization"
+            helperText="The name of your organization."
+            value={organization}
+            onChange={handleOrganizationChange}
+          />
+        </Grid>
+        <Grid item xs={12} sm={12}>
+          <TextField
+            {...commonTextFieldProps}
+            required
             id="dateInput"
             label="Date"
             type="date"
