@@ -14,8 +14,9 @@ import {
 } from '@material-ui/core';
 
 import CategorySelect from './CategorySelect';
-import { useCategories } from '../../hooks/useCategories';
 import { routes } from '../../constants';
+import { useAuth } from '../../hooks/useAuth';
+import { useCategories } from '../../hooks/useCategories';
 
 type Props = {
   classes: any,
@@ -24,6 +25,7 @@ type Props = {
 
 const NewSessionForm = (props: Props) => {
   const { classes, history } = props;
+  const user = useAuth();
   const [name, setName] = useState('New Session');
   const [organization, setOrganization] = useState('');
   const [date, setDate] = useState(format(new Date(), 'YYYY-MM-DD'));
@@ -57,6 +59,9 @@ const NewSessionForm = (props: Props) => {
       organization,
       date,
       categories: sessionCategories,
+      createDate: format(Date.now()),
+      createdBy: user.uid,
+      inProgress: true,
     };
 
     console.log('new session', newSession);
