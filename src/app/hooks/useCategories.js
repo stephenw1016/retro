@@ -1,15 +1,13 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { getCategories } from '../api';
 
 import { endpoints } from '../constants';
-// import { FirebaseContext } from '../context/firebase-context';
 
 /**
  * @param {string} url
  * @returns {[object[], boolean]}
  */
 export const useCategories = (url = endpoints.CATEGORIES) => {
-  // const firebase = useContext(FirebaseContext);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [categories, setCategories] = useState([]);
@@ -22,10 +20,7 @@ export const useCategories = (url = endpoints.CATEGORIES) => {
       setIsLoading(true);
 
       try {
-        // const { docs } = await firebase.db.collection('categories').get();
-        // const allData = docs.reduce((all, doc) => ({ ...all, [doc.id]: doc.data() }), Object.create(null));
-        const { data } = await axios(url);
-        const categoryResults = Object.entries(data).map(([id, value]) => ({ id, ...value }));
+        const categoryResults = await getCategories();
 
         if (mounted) {
           setCategories(categoryResults);

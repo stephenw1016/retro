@@ -17,7 +17,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import SignOutIcon from '@material-ui/icons/ExitToApp';
 
 import { useAuth } from '../../hooks/useAuth';
-import { FirebaseContext } from '../../context/firebase-context';
+import { FirebaseContext } from '../../context/FirebaseContext';
 import { routes } from '../../constants';
 
 type Props = {

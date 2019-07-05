@@ -1,5 +1,5 @@
 import React from 'react';
-import * as firebase from 'firebase';
+import * as fb from 'firebase';
 
 const firebaseConfig = {
   appId: process.env.APP_ID,
@@ -13,10 +13,12 @@ const firebaseConfig = {
 
 class Firebase {
   constructor() {
-    firebase.initializeApp(firebaseConfig);
-    this.auth = firebase.auth;
-    this.db = firebase.firestore();
+    fb.initializeApp(firebaseConfig);
+    this.auth = fb.auth;
+    this.db = fb.firestore();
   }
 }
 
-export const FirebaseContext = React.createContext(new Firebase());
+export const firebase = new Firebase();
+
+export const FirebaseContext = React.createContext(firebase);

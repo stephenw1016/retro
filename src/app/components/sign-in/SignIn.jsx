@@ -4,7 +4,7 @@ import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import { withStyles } from '@material-ui/core/styles';
 import { Grid, Paper, Typography } from '@material-ui/core';
 
-import { FirebaseContext } from '../../context/firebase-context';
+import { FirebaseContext } from '../../context/FirebaseContext';
 import { routes } from '../../constants';
 
 type Props = {
