@@ -1,3 +1,5 @@
+// @flow
+
 /**
  * A category used for voting and evaluating team health.
  */
@@ -8,4 +10,18 @@ export type Category = {
     positive: string,
     negative: string,
   },
+};
+
+/**
+ * A team health check session.
+ */
+export type Session = {
+  id: string,
+  date: string,
+  name: string,
+  organization: string,
+  categories: Array<Category>,
+  createDate: string,
+  createdBy: string,
+  inProgress: boolean,
 };

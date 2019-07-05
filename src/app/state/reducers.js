@@ -1,14 +1,22 @@
-import { REQUEST_CATEGORIES } from './types';
+import { ADD_SESSION } from './types';
 
 const initialState = {
+  sessions: {},
   categories: {},
   loading: false,
 };
 
-const categoriesReducer = (state = initialState, { type }) => {
+const sessionsReducer = (state = initialState, { type, payload }) => {
   switch (type) {
-    case REQUEST_CATEGORIES: {
-      return { ...state, loading: true };
+    case ADD_SESSION: {
+      const { session } = payload;
+      return {
+        ...state,
+        sessions: {
+          ...state.sessions,
+          [session.id]: session,
+        },
+      };
     }
 
     default: {
@@ -17,4 +25,4 @@ const categoriesReducer = (state = initialState, { type }) => {
   }
 };
 
-export default categoriesReducer;
+export default sessionsReducer;

@@ -1,5 +1,7 @@
 // @flow
 import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
+import uuid from 'uuid';
 import { withStyles } from '@material-ui/core/styles';
 import format from 'date-fns/format';
 import {
@@ -15,12 +17,14 @@ import {
 
 import CategorySelect from './CategorySelect';
 import { routes } from '../../constants';
+import { addSession } from '../../state/actions';
 import { useAuth } from '../../hooks/useAuth';
 import { useCategories } from '../../hooks/useCategories';
 
 type Props = {
   classes: any,
   history: any,
+  addSession: Function,
 };
 
 const NewSessionForm = (props: Props) => {
@@ -54,7 +58,8 @@ const NewSessionForm = (props: Props) => {
       return { ...category, id, votes: [] };
     });
 
-    const newSession = {
+    const session = {
+      id: uuid.v4(),
       name,
       organization,
       date,
@@ -64,9 +69,8 @@ const NewSessionForm = (props: Props) => {
       inProgress: true,
     };
 
-    console.log('new session', newSession);
-    // history.push(`${routes.SESSIONS}/${newSession.id}`);
-    history.push(`${routes.SESSION}/session-1`);
+    props.addSession(session);
+    history.push(`${routes.SESSION}/${session.id}`);
   };
 
   const commonTextFieldProps = {
@@ -167,4 +171,8 @@ const styles = theme => ({
   },
 });
 
-export default withStyles(styles)(NewSessionForm);
+const mapDispatchToProps = dispatch => ({
+  addSession: session => dispatch(addSession(session)),
+});
+
+export default connect(null, mapDispatchToProps)(withStyles(styles)(NewSessionForm));

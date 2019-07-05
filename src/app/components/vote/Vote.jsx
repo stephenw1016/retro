@@ -76,10 +76,10 @@ class Vote extends Component<Props> {
               required
               className={classes.formControl}
             >
-              <FormLabel component="legend">Color</FormLabel>
+              <FormLabel component="legend">Vote</FormLabel>
               <RadioGroup
-                aria-label="color"
-                name="color"
+                aria-label="vote"
+                name="vote"
                 className={classes.group}
               >
                 {options}
@@ -136,6 +136,7 @@ const styles = theme => ({
     margin: `${theme.spacing.unit * 2}px 0`,
   },
   tooltip: {
+    opacity: 1,
     backgroundColor: theme.palette.common.white,
     boxShadow: theme.shadows[1],
     color: 'rgba(0, 0, 0, 0.87)',
