@@ -1,12 +1,10 @@
 // @flow
 import React from 'react';
-import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import { Paper, Typography } from '@material-ui/core';
 
 import { Session as SessionType } from '../../types';
 import Vote from '../vote/Vote';
-import { getSessionById } from '../../state/selectors';
 
 type Props = {
   classes: {},
@@ -36,9 +34,4 @@ const styles = theme => ({
     padding: theme.spacing.unit * 2,
   },
 });
-
-const mapStateToProps = (state, ownProps) => ({
-  session: getSessionById(state, ownProps.match.params.id),
-});
-
-export default connect(mapStateToProps)(withStyles(styles)(Session));
+export default withStyles(styles)(Session);

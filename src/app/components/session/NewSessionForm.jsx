@@ -1,6 +1,5 @@
 // @flow
 import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
 import uuid from 'uuid';
 import { withStyles } from '@material-ui/core/styles';
 import format from 'date-fns/format';
@@ -17,7 +16,6 @@ import {
 
 import CategorySelect from './CategorySelect';
 import { routes } from '../../constants';
-import { addSession } from '../../state/actions';
 import { useAuth } from '../../hooks/useAuth';
 import { useCategories } from '../../hooks/useCategories';
 
@@ -90,7 +88,7 @@ const NewSessionForm = (props: Props) => {
   return (
     <Paper className={classes.root}>
       <Typography variant="h5">
-        New Session
+        Create New Session
       </Typography>
       <Grid className={classes.form} container alignItems="center" justify="center" spacing={24}>
         <Grid item xs={12} sm={12}>
@@ -171,8 +169,4 @@ const styles = theme => ({
   },
 });
 
-const mapDispatchToProps = dispatch => ({
-  addSession: session => dispatch(addSession(session)),
-});
-
-export default connect(null, mapDispatchToProps)(withStyles(styles)(NewSessionForm));
+export default withStyles(styles)(NewSessionForm);
