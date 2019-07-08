@@ -5,8 +5,8 @@ const CATEGORIES_CACHE_KEY = 'retro-categories';
 
 /**
  * Make api request save a Session.
- * @param {Session} session - the session to save
- * @returns {Promise<Category[]>}
+ * @param {SessionType} session - the session to save
+ * @returns {Promise<SessionType>}
  */
 export const saveSession = async (session) => {
   try {

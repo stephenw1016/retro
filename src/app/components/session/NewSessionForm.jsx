@@ -22,7 +22,7 @@ import { useCategories } from '../../hooks/useCategories';
 type Props = {
   classes: any,
   history: any,
-  saveSession: Function,
+  saveSession: any,
 };
 
 const NewSessionForm = (props: Props) => {

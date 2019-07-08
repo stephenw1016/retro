@@ -25,13 +25,14 @@ import type { VoteValue } from './types';
 type Props = {
   classes: any,
   category: any,
+  onSubmit: any,
 };
 
 const voteOptions: Array<VoteValue> = ['positive', 'neutral', 'negative'];
 
 class Vote extends Component<Props> {
   render() {
-    const { classes, category } = this.props;
+    const { classes, category, onSubmit } = this.props;
 
     const options = voteOptions.map((option: VoteValue) => (
       <FormControlLabel
@@ -43,7 +44,7 @@ class Vote extends Component<Props> {
     ));
 
     return (
-      <Card className={classes.root}>
+      <Card className={classes.root} elevation={2}>
         <CardHeader
           title={category.title}
           action={(
@@ -90,7 +91,6 @@ class Vote extends Component<Props> {
             <TextField
               fullWidth
               id="voter-comment"
-              className={classes.textField}
               label="Comment (optional)"
               margin="normal"
               multiline
@@ -98,8 +98,13 @@ class Vote extends Component<Props> {
             />
           </Grid>
         </CardContent>
-        <CardActions className={classes.cardActions}>
-          <Button variant="contained" color="primary">
+        <CardActions>
+          <Button
+            color="primary"
+            fullWidth
+            variant="contained"
+            onClick={onSubmit}
+          >
             Submit Vote
           </Button>
         </CardActions>
@@ -111,14 +116,8 @@ class Vote extends Component<Props> {
 const styles = theme => ({
   root: {
     margin: theme.spacing.unit,
-    maxWidth: 300,
     padding: theme.spacing.unit,
-  },
-  cardActions: {
-    justifyContent: 'flex-end',
-  },
-  checked: {
-
+    width: 350,
   },
   positive: {
     color: green[600],
