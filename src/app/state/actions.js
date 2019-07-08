@@ -1,11 +1,19 @@
 import {
-  ADD_SESSION,
   REQUEST_CATEGORIES,
+  SAVE_SESSION_REQUEST,
+  SAVE_SESSION_SUCCESS,
   SET_CURRENT_SESSION,
 } from './types';
 
-export const addSession = session => ({
-  type: ADD_SESSION,
+export const saveSessionRequest = session => ({
+  type: SAVE_SESSION_REQUEST,
+  payload: {
+    session,
+  },
+});
+
+export const saveSessionSuccess = session => ({
+  type: SAVE_SESSION_SUCCESS,
   payload: {
     session,
   },

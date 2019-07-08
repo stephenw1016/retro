@@ -22,11 +22,11 @@ import { useCategories } from '../../hooks/useCategories';
 type Props = {
   classes: any,
   history: any,
-  addSession: Function,
+  saveSession: Function,
 };
 
 const NewSessionForm = (props: Props) => {
-  const { classes, history } = props;
+  const { classes, history, saveSession } = props;
   const user = useAuth();
   const [name, setName] = useState('New Session');
   const [organization, setOrganization] = useState('');
@@ -67,7 +67,7 @@ const NewSessionForm = (props: Props) => {
       inProgress: true,
     };
 
-    props.addSession(session);
+    saveSession(session);
     history.push(`${routes.SESSION}/${session.id}`);
   };
 
@@ -128,13 +128,19 @@ const NewSessionForm = (props: Props) => {
         </Grid>
         <Grid item xs={12}>
           <FormControl required fullWidth margin="dense" error={!selectedCategoryIds.length}>
-            <InputLabel htmlFor="categorySelect" shrink>Categories</InputLabel>
+            <InputLabel htmlFor="categorySelect" shrink>
+              Categories
+            </InputLabel>
             <CategorySelect
+              classes={{ root: classes.categorySelect }}
               categories={categories}
               selectedCategoryIds={selectedCategoryIds}
               onChange={setSelectedCategoryIds}
             />
-            <FormHelperText>Select the categories that your team will vote on.</FormHelperText>
+            <FormHelperText>
+              {`Select the categories that your team will vote on. 
+               ${selectedCategoryIds.length} of ${categories.length} selected.`}
+            </FormHelperText>
           </FormControl>
         </Grid>
         <Grid className={classes.actions} item xs={12}>
@@ -160,6 +166,10 @@ const styles = theme => ({
   actions: {
     display: 'flex',
     justifyContent: 'flex-end',
+  },
+  categorySelect: {
+    maxHeight: 350,
+    overflow: 'auto',
   },
   form: {
     padding: `${theme.spacing.unit * 2}px 0`,

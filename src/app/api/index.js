@@ -4,6 +4,23 @@ import { firebase } from '../context/FirebaseContext';
 const CATEGORIES_CACHE_KEY = 'retro-categories';
 
 /**
+ * Make api request save a Session.
+ * @param {Session} session - the session to save
+ * @returns {Promise<Category[]>}
+ */
+export const saveSession = async (session) => {
+  try {
+    // await firebase.db.collection('sessions')
+    //   .doc(session.id)
+    //   .set(session);
+    return session;
+  } catch (err) {
+    console.error('An error occurred while saving a session', session, err);
+    return null;
+  }
+};
+
+/**
  * Make api request to retrieve categories.
  * @returns {Promise<Category[]>}
  */

@@ -1,11 +1,11 @@
 // @flow
 import { connect } from 'react-redux';
-import { addSession } from '../../state/actions';
+import { saveSessionRequest } from '../../state/actions';
 
 import NewSessionForm from './NewSessionForm';
 
 const mapDispatchToProps = dispatch => ({
-  addSession: session => dispatch(addSession(session)),
+  saveSession: session => dispatch(saveSessionRequest(session)),
 });
 
 export default connect(null, mapDispatchToProps)(NewSessionForm);

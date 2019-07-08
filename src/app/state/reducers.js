@@ -1,4 +1,4 @@
-import { ADD_SESSION, SET_CURRENT_SESSION } from './types';
+import { SAVE_SESSION_SUCCESS, SET_CURRENT_SESSION } from './types';
 
 const initialState = {
   currentSession: '',
@@ -9,7 +9,7 @@ const initialState = {
 
 const sessionsReducer = (state = initialState, { type, payload }) => {
   switch (type) {
-    case ADD_SESSION: {
+    case SAVE_SESSION_SUCCESS: {
       const { session } = payload;
       const { id } = session;
       return {
