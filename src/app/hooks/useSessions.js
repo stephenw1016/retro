@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
-import { getCategories } from '../api';
+import { getSessionById } from '../api';
 
 /**
- * @returns {[object[], boolean, boolean]}
+ * @param {string} id
+ * @returns {[object, boolean, boolean]}
  */
-export const useCategories = () => {
+export const useSession = (id) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
-  const [categories, setCategories] = useState([]);
+  const [session, setSession] = useState(null);
 
   useEffect(() => {
     let mounted = true;
@@ -17,10 +18,9 @@ export const useCategories = () => {
       setIsLoading(true);
 
       try {
-        const categoryResults = await getCategories();
-
+        const sessionResult = await getSessionById(id);
         if (mounted) {
-          setCategories(categoryResults);
+          setSession(sessionResult);
         }
       } catch (error) {
         setIsError(true);
@@ -31,7 +31,7 @@ export const useCategories = () => {
     })();
 
     return () => { mounted = false; };
-  }, []);
+  }, [id]);
 
-  return [categories, isError, isLoading];
+  return [session, isError, isLoading];
 };

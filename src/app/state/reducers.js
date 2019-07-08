@@ -1,4 +1,4 @@
-import { SAVE_SESSION_SUCCESS, SET_CURRENT_SESSION } from './types';
+import { SAVE_SESSION_SUCCESS, SET_CURRENT_SESSION, SUBMIT_VOTE } from './types';
 
 const testSession = {
   id: 123,
@@ -6,9 +6,9 @@ const testSession = {
   organization: 'SpaceX',
   date: '2019-07-08',
   categories: [
-    { id: 'category-1', title: 'Category 1', description: { positive: 'p', negative: 'n' } },
-    { id: 'category-2', title: 'Category 2', description: { positive: 'p', negative: 'n' } },
-    { id: 'category-3', title: 'Category 3', description: { positive: 'p', negative: 'n' } },
+    { id: 'category-1', title: 'Category 1', description: { positive: 'p', negative: 'n' }, votes: [] },
+    { id: 'category-2', title: 'Category 2', description: { positive: 'p', negative: 'n' }, votes: [] },
+    { id: 'category-3', title: 'Category 3', description: { positive: 'p', negative: 'n' }, votes: [] },
   ],
   createDate: '2019-07-08',
   createdBy: 123,
@@ -16,7 +16,7 @@ const testSession = {
 };
 
 const initialState = {
-  currentSession: '',
+  currentSession: '123',
   sessions: { [testSession.id]: testSession },
   categories: {},
   loading: false,
@@ -39,6 +39,28 @@ const sessionsReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         currentSession: sessionId,
+      };
+    }
+
+    case SUBMIT_VOTE: {
+      const { sessionId, categoryId, vote } = payload;
+      const activeSession = state.sessions[sessionId];
+
+      return {
+        ...state,
+        sessions: {
+          ...state.sessions,
+          [activeSession.id]: {
+            ...activeSession,
+            categories: activeSession.categories
+              .map((category) => {
+                const isActiveCategory = category.id === categoryId;
+                return isActiveCategory
+                  ? { ...category, votes: [...category.votes, vote] }
+                  : category;
+              }),
+          },
+        },
       };
     }
 

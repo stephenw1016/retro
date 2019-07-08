@@ -1,5 +1,5 @@
 // @flow
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { green, yellow, red } from '@material-ui/core/colors';
 import Button from '@material-ui/core/Button';
@@ -28,97 +28,112 @@ type Props = {
   onSubmit: any,
 };
 
-const voteOptions: Array<VoteValue> = ['positive', 'neutral', 'negative'];
+const Vote = (props: Props) => {
+  const { classes, category, onSubmit } = props;
+  const voteOptions: Array<VoteValue> = ['positive', 'neutral', 'negative'];
+  const [value, setValue] = useState(null);
+  const [comment, setComment] = useState('');
 
-class Vote extends Component<Props> {
-  render() {
-    const { classes, category, onSubmit } = this.props;
+  const options = voteOptions.map((option: VoteValue) => (
+    <FormControlLabel
+      key={option}
+      control={<Radio classes={{ root: classes[option], checked: classes.checked }} />}
+      label={option}
+      value={option}
+    />
+  ));
 
-    const options = voteOptions.map((option: VoteValue) => (
-      <FormControlLabel
-        key={option}
-        control={<Radio classes={{ root: classes[option], checked: classes.checked }} />}
-        label={option}
-        value={option}
-      />
-    ));
+  const handleValueChange = (e) => {
+    setValue(e.target.value);
+  };
 
-    return (
-      <Card className={classes.root} elevation={2}>
-        <CardHeader
-          title={category.title}
-          action={(
-            <Tooltip
-              classes={{ tooltip: classes.tooltip }}
-              title={(
-                <>
-                  <Typography className={classes.tooltipTitle} variant="caption">
-                    Which sentiment to you most agree with?
-                  </Typography>
-                  <Typography variant="subtitle1">Positive</Typography>
-                  <Typography variant="body1">{category.description.positive}</Typography>
-                  <Divider className={classes.divider} light />
-                  <Typography variant="subtitle1">Negative</Typography>
-                  <Typography variant="body1">{category.description.negative}</Typography>
-                </>
-              )}
-            >
-              <IconButton disableRipple>
-                <InfoIcon />
-              </IconButton>
-            </Tooltip>
-          )}
-        />
-        <CardContent>
-          <Grid item xs={12}>
-            <FormControl
-              fullWidth
-              component="fieldset"
-              required
-              className={classes.formControl}
-            >
-              <FormLabel component="legend">Vote</FormLabel>
-              <RadioGroup
-                aria-label="vote"
-                name="vote"
-                className={classes.group}
-              >
-                {options}
-              </RadioGroup>
-            </FormControl>
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              fullWidth
-              id="voter-comment"
-              label="Comment (optional)"
-              margin="normal"
-              multiline
-              value=""
-            />
-          </Grid>
-        </CardContent>
-        <CardActions>
-          <Button
-            color="primary"
-            fullWidth
-            variant="contained"
-            onClick={onSubmit}
+  const handleCommentChange = (e) => {
+    setComment(e.target.value);
+  };
+
+  const handleSubmit = () => {
+    onSubmit({ value, comment });
+  };
+
+  return (
+    <Card className={classes.root} elevation={2}>
+      <CardHeader
+        title={category.title}
+        action={(
+          <Tooltip
+            classes={{ tooltip: classes.tooltip }}
+            title={(
+              <>
+                <Typography className={classes.tooltipTitle} variant="caption">
+                  Which sentiment to you most agree with?
+                </Typography>
+                <Typography variant="subtitle1">Positive</Typography>
+                <Typography variant="body1">{category.description.positive}</Typography>
+                <Divider className={classes.divider} light />
+                <Typography variant="subtitle1">Negative</Typography>
+                <Typography variant="body1">{category.description.negative}</Typography>
+              </>
+            )}
           >
-            Submit Vote
-          </Button>
-        </CardActions>
-      </Card>
-    );
-  }
-}
+            <IconButton disableRipple>
+              <InfoIcon />
+            </IconButton>
+          </Tooltip>
+        )}
+      />
+      <CardContent>
+        <Grid item xs={12}>
+          <FormControl
+            fullWidth
+            component="fieldset"
+            required
+            className={classes.formControl}
+          >
+            <FormLabel component="legend" error={!value}>Vote</FormLabel>
+            <RadioGroup
+              aria-label="vote"
+              name="vote"
+              className={classes.group}
+              value={value}
+              onChange={handleValueChange}
+            >
+              {options}
+            </RadioGroup>
+          </FormControl>
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            fullWidth
+            id="voter-comment"
+            label="Comment (optional)"
+            margin="normal"
+            multiline
+            value={comment}
+            onChange={handleCommentChange}
+          />
+        </Grid>
+      </CardContent>
+      <CardActions>
+        <Button
+          color="primary"
+          disabled={!value}
+          fullWidth
+          variant="contained"
+          onClick={handleSubmit}
+        >
+          Submit Vote
+        </Button>
+      </CardActions>
+    </Card>
+  );
+};
 
 const styles = theme => ({
   root: {
-    margin: theme.spacing.unit,
     padding: theme.spacing.unit,
-    width: 350,
+    width: '100%',
   },
+  checked: {},
   positive: {
     color: green[600],
     '&$checked': { color: green[500] },
@@ -135,10 +150,8 @@ const styles = theme => ({
     margin: `${theme.spacing.unit * 2}px 0`,
   },
   tooltip: {
-    opacity: 1,
     backgroundColor: theme.palette.common.white,
     boxShadow: theme.shadows[1],
-    color: 'rgba(0, 0, 0, 0.87)',
     padding: theme.spacing.unit * 2,
   },
   tooltipTitle: {

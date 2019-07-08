@@ -1,68 +1,77 @@
 // @flow
 import React, { useState } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { Button, Grid, Paper, Typography } from '@material-ui/core';
+import { Button, Grid, LinearProgress, Paper, Typography } from '@material-ui/core';
 
 import Vote from '../vote/Vote';
-import { Session as SessionType } from '../../types';
+import { useSession } from '../../hooks/useSessions';
 import SessionNotFound from './SessionNotFound';
 
 type Props = {
   classes: any,
   match: any,
-  session: SessionType,
   submitVote: any,
 };
 
 const Session = (props: Props) => {
-  const { classes, match: { params }, session, submitVote } = props;
+  const { classes, match: { params }, submitVote } = props;
   const [categoryIndex, setCategoryIndex] = useState(0);
+  const [session] = useSession(params.id);
 
   if (!session) {
     return <SessionNotFound sessionId={params.id} />;
   }
+
+  const { id, categories, name, organization } = session;
 
   const handleGoBack = () => {
     setCategoryIndex(categoryIndex - 1);
   };
 
   const handleSubmitVote = (vote) => {
-    const { id: categoryId } = session.categories[categoryIndex];
+    const { id: categoryId } = categories[categoryIndex];
     submitVote(session.id, categoryId, vote);
 
-    const votingNotDone = categoryIndex !== session.categories.length - 1;
+    const votingNotDone = categoryIndex !== categories.length - 1;
     if (votingNotDone) {
       setCategoryIndex(categoryIndex + 1);
     }
   };
 
-  const category = session.categories[categoryIndex];
+  const category = categories[categoryIndex];
+  const normalise = value => (value) * 100 / (categories.length);
 
   return (
     <Paper className={classes.root} square elevation={0}>
-      <Typography variant="title">{session.name}</Typography>
-      <Typography variant="subtitle1">
-        Session ID:
-        {session.id}
-      </Typography>
-      <Grid
-        alignItems="center"
-        container
-        direction="column"
-      >
-        <Vote
-          key={category.id}
-          category={category}
-          onSubmit={handleSubmitVote}
-        />
-        <Button
-          className={classes.button}
-          color="secondary"
-          disabled={!categoryIndex}
-          onClick={handleGoBack}
-        >
-          Go Back
-        </Button>
+      <Grid container spacing={24}>
+        <Grid item xs={12} sm={6}>
+          <Typography variant="title">{name}</Typography>
+          <Typography variant="subtitle1">{`Session ID: ${id}`}</Typography>
+          <Typography variant="subtitle1">{`Organization: ${organization}`}</Typography>
+          <Typography variant="subtitle1">{`Progress: ${categoryIndex + 1} of ${categories.length}`}</Typography>
+          <LinearProgress
+            classes={{ root: classes.progressRoot }}
+            className={classes.progress}
+            color="secondary"
+            variant="determinate"
+            value={normalise(categoryIndex + 1)}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <Vote
+            key={category.id}
+            category={category}
+            onSubmit={handleSubmitVote}
+          />
+          <Button
+            className={classes.button}
+            color="secondary"
+            disabled={!categoryIndex}
+            onClick={handleGoBack}
+          >
+            Go Back
+          </Button>
+        </Grid>
       </Grid>
     </Paper>
   );
@@ -71,6 +80,10 @@ const Session = (props: Props) => {
 const styles = theme => ({
   root: {
     padding: theme.spacing.unit * 2,
+  },
+  progressRoot: {
+    height: 8,
+    width: 200,
   },
 });
 export default withStyles(styles)(Session);
