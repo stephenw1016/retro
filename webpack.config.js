@@ -20,7 +20,14 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        use: ['babel-loader', 'eslint-loader']
+        use: ['babel-loader', {
+          loader: 'eslint-loader',
+          options: {
+            cache: true,
+            emitWarning: true,
+            fix: true,
+          },
+        }]
       },
       {
         test: /\.html$/,

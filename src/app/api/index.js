@@ -1,7 +1,6 @@
 import cache from './cache';
 import { firebase } from '../context/FirebaseContext';
 
-// const SESSIONS_CACHE_KEY = 'retro-sessions';
 const CATEGORIES_CACHE_KEY = 'retro-categories';
 
 /**
@@ -15,7 +14,6 @@ const requestSessionById = async (id) => {
     const doc = await firebase.db.collection('sessions').doc(id).get();
     if (doc.exists) {
       session = doc.data();
-      // cache.set(SESSIONS_CACHE_KEY, session);
     }
   } catch (err) {
     console.error('An error occurred while requesting a session by id', err);
@@ -23,8 +21,6 @@ const requestSessionById = async (id) => {
 
   return session;
 };
-
-console.log(!!requestSessionById);
 
 /**
  * Get session a session from cache or server.
@@ -38,9 +34,9 @@ export const getSessionById = async () => ({
   organization: 'SpaceX',
   date: '2019-07-08',
   categories: [
-    { id: 'category-1', title: 'Category 1', description: { positive: 'p', negative: 'n' } },
-    { id: 'category-2', title: 'Category 2', description: { positive: 'p', negative: 'n' } },
-    { id: 'category-3', title: 'Category 3', description: { positive: 'p', negative: 'n' } },
+    { id: 'category-1', title: 'Category 1', description: { positive: 'p', negative: 'n' }, votes: [] },
+    { id: 'category-2', title: 'Category 2', description: { positive: 'p', negative: 'n' }, votes: [] },
+    { id: 'category-3', title: 'Category 3', description: { positive: 'p', negative: 'n' }, votes: [] },
   ],
   createDate: '2019-07-08',
   createdBy: 123,
