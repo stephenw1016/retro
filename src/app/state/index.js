@@ -2,10 +2,10 @@ import { applyMiddleware, createStore } from 'redux';
 import thunkMiddleWare from 'redux-thunk';
 
 import { saveSessionMiddleware } from './middleware';
-import categoriesReducer from './reducers';
+import retroReducers from './reducers';
 
 export const store = createStore(
-  categoriesReducer,
+  retroReducers,
   applyMiddleware(
     thunkMiddleWare,
     saveSessionMiddleware,

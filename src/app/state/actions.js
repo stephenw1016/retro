@@ -1,8 +1,7 @@
 import {
-  REQUEST_CATEGORIES,
   SAVE_SESSION_REQUEST,
   SAVE_SESSION_SUCCESS,
-  SET_CURRENT_SESSION, SUBMIT_VOTE,
+  SUBMIT_VOTE,
 } from './types';
 
 export const saveSessionRequest = session => ({
@@ -26,16 +25,4 @@ export const submitVote = (sessionId, categoryId, vote) => ({
     categoryId,
     vote,
   },
-});
-
-export const setCurrentSession = sessionId => ({
-  type: SET_CURRENT_SESSION,
-  payload: {
-    sessionId,
-  },
-});
-
-export const requestCategories = () => ({
-  type: REQUEST_CATEGORIES,
-  payload: {},
 });

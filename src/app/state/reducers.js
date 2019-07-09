@@ -1,4 +1,4 @@
-import { SAVE_SESSION_SUCCESS, SET_CURRENT_SESSION, SUBMIT_VOTE } from './types';
+import { SAVE_SESSION_SUCCESS, SUBMIT_VOTE } from './types';
 
 const testSession = {
   id: 123,
@@ -16,29 +16,19 @@ const testSession = {
 };
 
 const initialState = {
-  currentSession: '123',
   sessions: { [testSession.id]: testSession },
   categories: {},
   loading: false,
 };
 
-const sessionsReducer = (state = initialState, { type, payload }) => {
+const retroReducers = (state = initialState, { type, payload }) => {
   switch (type) {
     case SAVE_SESSION_SUCCESS: {
       const { session } = payload;
       const { id } = session;
       return {
         ...state,
-        currentSession: id,
         sessions: { ...state.sessions, [id]: session },
-      };
-    }
-
-    case SET_CURRENT_SESSION: {
-      const { sessionId } = payload;
-      return {
-        ...state,
-        currentSession: sessionId,
       };
     }
 
@@ -70,4 +60,4 @@ const sessionsReducer = (state = initialState, { type, payload }) => {
   }
 };
 
-export default sessionsReducer;
+export default retroReducers;
