@@ -1,6 +1,6 @@
 // @flow
 import React, { useState } from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import { green, yellow, red } from '@material-ui/core/colors';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
@@ -23,13 +23,44 @@ import Typography from '@material-ui/core/Typography';
 import type { VoteValue } from './types';
 
 type Props = {
-  classes: any,
   category: any,
   onSubmit: any,
 };
 
+const useStyles = makeStyles(theme => ({
+  root: {
+    padding: theme.spacing(1),
+    width: '100%',
+  },
+  checked: {},
+  positive: {
+    color: green[600],
+    '&$checked': { color: green[500] },
+  },
+  neutral: {
+    color: yellow[600],
+    '&$checked': { color: yellow[500] },
+  },
+  negative: {
+    color: red[600],
+    '&$checked': { color: red[500] },
+  },
+  divider: {
+    margin: `${theme.spacing(2)}px 0`,
+  },
+  tooltip: {
+    backgroundColor: theme.palette.common.white,
+    boxShadow: theme.shadows[1],
+    padding: theme.spacing(2),
+  },
+  tooltipTitle: {
+    marginBottom: theme.spacing(1),
+  },
+}));
+
 const Vote = (props: Props) => {
-  const { classes, category, onSubmit } = props;
+  const { category, onSubmit } = props;
+  const classes = useStyles();
   const voteOptions: Array<VoteValue> = ['positive', 'neutral', 'negative'];
   const [value, setValue] = useState(null);
   const [comment, setComment] = useState('');
@@ -128,35 +159,4 @@ const Vote = (props: Props) => {
   );
 };
 
-const styles = theme => ({
-  root: {
-    padding: theme.spacing(1),
-    width: '100%',
-  },
-  checked: {},
-  positive: {
-    color: green[600],
-    '&$checked': { color: green[500] },
-  },
-  neutral: {
-    color: yellow[600],
-    '&$checked': { color: yellow[500] },
-  },
-  negative: {
-    color: red[600],
-    '&$checked': { color: red[500] },
-  },
-  divider: {
-    margin: `${theme.spacing(2)}px 0`,
-  },
-  tooltip: {
-    backgroundColor: theme.palette.common.white,
-    boxShadow: theme.shadows[1],
-    padding: theme.spacing(2),
-  },
-  tooltipTitle: {
-    marginBottom: theme.spacing(1),
-  },
-});
-
-export default withStyles(styles)(Vote);
+export default Vote;

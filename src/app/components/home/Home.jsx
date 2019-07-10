@@ -1,6 +1,6 @@
 // @flow
 import React, { useState } from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 import { Button, Paper } from '@material-ui/core';
 
@@ -8,12 +8,19 @@ import JoinSessionDialog from '../session/JoinSessionDialog';
 import { routes } from '../../constants';
 
 type Props = {
-  classes: any,
   history: any,
 };
 
+const useStyles = makeStyles(theme => ({
+  root: {},
+  linkButton: {
+    margin: theme.spacing(1),
+  },
+}));
+
 const Home = (props: Props) => {
-  const { classes, history } = props;
+  const { history } = props;
+  const classes = useStyles();
   const [open, setOpen] = useState(false);
 
   const handleJoinDialogOpen = () => {
@@ -58,11 +65,4 @@ const Home = (props: Props) => {
   );
 };
 
-const styles = theme => ({
-  root: {},
-  linkButton: {
-    margin: theme.spacing(1),
-  },
-});
-
-export default withStyles(styles)(Home);
+export default Home;

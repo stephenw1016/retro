@@ -1,18 +1,33 @@
 // @flow
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import { Button, Paper, Typography } from '@material-ui/core';
 
 import { routes } from '../../constants';
 
 type Props = {
-  classes: any,
   sessionId: string,
 };
 
+const useStyles = makeStyles(theme => ({
+  root: {
+    alignItems: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    padding: theme.spacing(2),
+  },
+  id: {
+    fontWeight: 'bold',
+  },
+  linkButton: {
+    margin: theme.spacing(1),
+  },
+}));
+
 const SessionNotFound = (props: Props) => {
-  const { classes, sessionId } = props;
+  const { sessionId } = props;
+  const classes = useStyles();
 
   return (
     <Paper className={classes.root} square elevation={0}>
@@ -37,19 +52,4 @@ const SessionNotFound = (props: Props) => {
   );
 };
 
-const styles = theme => ({
-  root: {
-    alignItems: 'center',
-    display: 'flex',
-    flexDirection: 'column',
-    padding: theme.spacing(2),
-  },
-  id: {
-    fontWeight: 'bold',
-  },
-  linkButton: {
-    margin: theme.spacing(1),
-  },
-});
-
-export default withStyles(styles)(SessionNotFound);
+export default SessionNotFound;

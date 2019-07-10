@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import {
   Checkbox,
   List,
@@ -18,8 +18,17 @@ type Props = {
   selectedCategoryIds: Array<string>,
 };
 
+const useStyles = makeStyles(theme => ({
+  root: {
+    height: 300,
+    overflow: 'auto',
+    margin: `${theme.spacing(2)}px 0`,
+  },
+}));
+
 const CategorySelect = (props: Props) => {
-  const { categories, classes, onChange, selectedCategoryIds } = props;
+  const { categories, onChange, selectedCategoryIds } = props;
+  const classes = useStyles();
 
   const handleCategoryToggle = id => () => {
     const currentIndex = selectedCategoryIds.indexOf(id);
@@ -35,7 +44,7 @@ const CategorySelect = (props: Props) => {
   };
 
   return (
-    <List id="categorySelect" className={classes.root}>
+    <List id="categorySelect" className={classes.root} disablePadding>
       {categories.map(({ id, title }) => {
         const labelId = `category-select-label-${id}`;
 
@@ -64,10 +73,4 @@ const CategorySelect = (props: Props) => {
   );
 };
 
-const styles = theme => ({
-  root: {
-    margin: `${theme.spacing(1)}px 0`,
-  },
-});
-
-export default withStyles(styles)(CategorySelect);
+export default CategorySelect;

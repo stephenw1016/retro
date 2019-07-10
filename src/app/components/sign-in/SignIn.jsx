@@ -1,18 +1,23 @@
 // @flow
 import React, { useContext } from 'react';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
-import { withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Paper, Typography } from '@material-ui/core';
 
 import { FirebaseContext } from '../../context/FirebaseContext';
 import { routes } from '../../constants';
 
-type Props = {
-  classes: any,
-};
+const useStyles = makeStyles(theme => ({
+  root: {
+    height: '100%',
+  },
+  title: {
+    padding: theme.spacing(1),
+  },
+}));
 
-const SignIn = (props: Props) => {
-  const { classes } = props;
+const SignIn = () => {
+  const classes = useStyles();
   const firebase = useContext(FirebaseContext);
 
   const uiConfig = {
@@ -48,13 +53,4 @@ const SignIn = (props: Props) => {
   );
 };
 
-const styles = theme => ({
-  root: {
-    height: '100%',
-  },
-  title: {
-    padding: theme.spacing(1),
-  },
-});
-
-export default withStyles(styles)(SignIn);
+export default SignIn;

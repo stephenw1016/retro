@@ -1,21 +1,19 @@
 // @flow
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 
-type Props = {
-  classes: any,
-};
+type Props = {};
 
-const UserProfile = (props: Props) => {
-  const { classes } = props;
+const useStyles = makeStyles(theme => ({
+  root: {},
+}));
+
+const UserProfile = () => {
+  const classes = useStyles();
 
   return (
     <div className={classes.root}>User Profile</div>
   );
 };
 
-const styles = () => ({
-  root: {},
-});
-
-export default withStyles(styles)(UserProfile);
+export default UserProfile;

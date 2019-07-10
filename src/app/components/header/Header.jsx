@@ -1,7 +1,7 @@
 // @flow
 import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import {
   AppBar,
   Avatar,
@@ -20,12 +20,28 @@ import { useAuth } from '../../hooks/useAuth';
 import { FirebaseContext } from '../../context/FirebaseContext';
 import { routes } from '../../constants';
 
-type Props = {
-  classes: any,
-};
+const useStyles = makeStyles((theme) => {
+  const avatarSize = 35;
 
-const Header = (props: Props) => {
-  const { classes } = props;
+  return {
+    avatar: {
+      cursor: 'pointer',
+      marginLeft: theme.spacing(2),
+      height: avatarSize,
+      width: avatarSize,
+    },
+    branding: {
+      flexGrow: 1,
+      textDecoration: 'none',
+    },
+    userName: {
+      cursor: 'pointer',
+    },
+  };
+});
+
+const Header = () => {
+  const classes = useStyles();
   const firebase = useContext(FirebaseContext);
   const [anchorEl, setAnchorEl] = useState(null);
   const user = useAuth();
@@ -99,24 +115,4 @@ const Header = (props: Props) => {
   );
 };
 
-const styles = (theme) => {
-  const avatarSize = 35;
-
-  return {
-    avatar: {
-      cursor: 'pointer',
-      marginLeft: theme.spacing(2),
-      height: avatarSize,
-      width: avatarSize,
-    },
-    branding: {
-      flexGrow: 1,
-      textDecoration: 'none',
-    },
-    userName: {
-      cursor: 'pointer',
-    },
-  };
-};
-
-export default withStyles(styles)(Header);
+export default Header;

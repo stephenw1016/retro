@@ -1,6 +1,6 @@
 // @flow
 import React, { useState } from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import { Button, Grid, LinearProgress, Paper, Typography } from '@material-ui/core';
 
 import Vote from '../vote/Vote';
@@ -8,13 +8,23 @@ import { useSession } from '../../hooks/useSessions';
 import SessionNotFound from './SessionNotFound';
 
 type Props = {
-  classes: any,
   match: any,
   submitVote: any,
 };
 
+const useStyles = makeStyles(theme => ({
+  root: {
+    padding: theme.spacing(2),
+  },
+  progressRoot: {
+    height: 8,
+    width: 200,
+  },
+}));
+
 const Session = (props: Props) => {
-  const { classes, match: { params }, submitVote } = props;
+  const classes = useStyles();
+  const { match: { params }, submitVote } = props;
   const [categoryIndex, setCategoryIndex] = useState(0);
   const [session] = useSession(params.id);
 
@@ -77,13 +87,4 @@ const Session = (props: Props) => {
   );
 };
 
-const styles = theme => ({
-  root: {
-    padding: theme.spacing(2),
-  },
-  progressRoot: {
-    height: 8,
-    width: 200,
-  },
-});
-export default withStyles(styles)(Session);
+export default Session;

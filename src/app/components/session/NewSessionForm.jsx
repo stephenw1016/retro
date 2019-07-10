@@ -1,7 +1,7 @@
 // @flow
 import React, { useEffect, useState } from 'react';
 import uuid from 'uuid';
-import { withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import format from 'date-fns/format';
 import {
   Button,
@@ -20,13 +20,34 @@ import { useAuth } from '../../hooks/useAuth';
 import { useCategories } from '../../hooks/useCategories';
 
 type Props = {
-  classes: any,
   history: any,
   saveSession: any,
 };
 
+const useStyles = makeStyles(theme => ({
+  root: {
+    height: '100%',
+    padding: theme.spacing(2),
+  },
+  actions: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
+  categorySelect: {
+    maxHeight: 300,
+    overflow: 'auto',
+  },
+  form: {
+    padding: `${theme.spacing(2)}px 0`,
+  },
+  title: {
+    padding: theme.spacing(1),
+  },
+}));
+
 const NewSessionForm = (props: Props) => {
-  const { classes, history, saveSession } = props;
+  const { history, saveSession } = props;
+  const classes = useStyles();
   const user = useAuth();
   const [name, setName] = useState('New Session');
   const [organization, setOrganization] = useState('');
@@ -132,14 +153,14 @@ const NewSessionForm = (props: Props) => {
               Categories
             </InputLabel>
             <CategorySelect
-              classes={{ root: classes.categorySelect }}
+              className={classes.categorySelect}
               categories={categories}
               selectedCategoryIds={selectedCategoryIds}
               onChange={setSelectedCategoryIds}
             />
             <FormHelperText>
-              {`Select the categories that your team will vote on. 
-               ${selectedCategoryIds.length} of ${categories.length} selected.`}
+              {`Select the categories that your team will vote on.
+               ${selectedCategoryIds.length}/${categories.length} selected.`}
             </FormHelperText>
           </FormControl>
         </Grid>
@@ -158,25 +179,4 @@ const NewSessionForm = (props: Props) => {
   );
 };
 
-const styles = theme => ({
-  root: {
-    height: '100%',
-    padding: theme.spacing(2),
-  },
-  actions: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-  },
-  categorySelect: {
-    maxHeight: 300,
-    overflow: 'auto',
-  },
-  form: {
-    padding: `${theme.spacing(2)}px 0`,
-  },
-  title: {
-    padding: theme.spacing(1),
-  },
-});
-
-export default withStyles(styles)(NewSessionForm);
+export default NewSessionForm;
