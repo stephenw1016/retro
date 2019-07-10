@@ -20,14 +20,21 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        use: ['babel-loader', {
+        use: [{
+          loader: 'babel-loader',
+          options: {
+            cacheDirectory: true,
+            presets: ["@babel/env", "@babel/react", "@babel/flow"],
+            plugins: ["@babel/plugin-syntax-dynamic-import","transform-flow-comments"],
+          },
+        }, {
           loader: 'eslint-loader',
           options: {
             cache: true,
             emitWarning: true,
             fix: true,
           },
-        }]
+        }],
       },
       {
         test: /\.html$/,
