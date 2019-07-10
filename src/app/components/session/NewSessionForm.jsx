@@ -90,7 +90,7 @@ const NewSessionForm = (props: Props) => {
       <Typography variant="h5">
         Create New Session
       </Typography>
-      <Grid className={classes.form} container alignItems="center" justify="center" spacing={24}>
+      <Grid className={classes.form} container alignItems="center" justify="center" spacing={2}>
         <Grid item xs={12} sm={12}>
           <TextField
             {...commonTextFieldProps}
@@ -161,21 +161,21 @@ const NewSessionForm = (props: Props) => {
 const styles = theme => ({
   root: {
     height: '100%',
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
   },
   actions: {
     display: 'flex',
     justifyContent: 'flex-end',
   },
   categorySelect: {
-    maxHeight: 350,
+    maxHeight: 300,
     overflow: 'auto',
   },
   form: {
-    padding: `${theme.spacing.unit * 2}px 0`,
+    padding: `${theme.spacing(2)}px 0`,
   },
   title: {
-    padding: theme.spacing.unit,
+    padding: theme.spacing(1),
   },
 });
 

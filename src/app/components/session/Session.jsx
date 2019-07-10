@@ -43,9 +43,9 @@ const Session = (props: Props) => {
 
   return (
     <Paper className={classes.root} square elevation={0}>
-      <Grid container spacing={24}>
+      <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
-          <Typography variant="title">{name}</Typography>
+          <Typography variant="h6">{name}</Typography>
           <Typography variant="subtitle1">{`Session ID: ${id}`}</Typography>
           <Typography variant="subtitle1">{`Organization: ${organization}`}</Typography>
           <Typography variant="subtitle1">{`Progress: ${categoryIndex + 1} of ${categories.length}`}</Typography>
@@ -79,7 +79,7 @@ const Session = (props: Props) => {
 
 const styles = theme => ({
   root: {
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
   },
   progressRoot: {
     height: 8,

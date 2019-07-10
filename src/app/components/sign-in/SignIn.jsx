@@ -53,7 +53,7 @@ const styles = theme => ({
     height: '100%',
   },
   title: {
-    padding: theme.spacing.unit,
+    padding: theme.spacing(1),
   },
 });
 

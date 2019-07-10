@@ -49,7 +49,7 @@ const Header = (props: Props) => {
         <Typography
           className={classes.branding}
           color="inherit"
-          variant="title"
+          variant="h6"
           component={Link}
           to={routes.HOME}
         >
@@ -105,7 +105,7 @@ const styles = (theme) => {
   return {
     avatar: {
       cursor: 'pointer',
-      marginLeft: theme.spacing.unit * 2,
+      marginLeft: theme.spacing(2),
       height: avatarSize,
       width: avatarSize,
     },

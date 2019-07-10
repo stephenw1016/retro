@@ -66,7 +66,7 @@ const CategorySelect = (props: Props) => {
 
 const styles = theme => ({
   root: {
-    margin: `${theme.spacing.unit}px 0`,
+    margin: `${theme.spacing(1)}px 0`,
   },
 });
 

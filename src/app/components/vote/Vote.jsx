@@ -130,7 +130,7 @@ const Vote = (props: Props) => {
 
 const styles = theme => ({
   root: {
-    padding: theme.spacing.unit,
+    padding: theme.spacing(1),
     width: '100%',
   },
   checked: {},
@@ -147,15 +147,15 @@ const styles = theme => ({
     '&$checked': { color: red[500] },
   },
   divider: {
-    margin: `${theme.spacing.unit * 2}px 0`,
+    margin: `${theme.spacing(2)}px 0`,
   },
   tooltip: {
     backgroundColor: theme.palette.common.white,
     boxShadow: theme.shadows[1],
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
   },
   tooltipTitle: {
-    marginBottom: theme.spacing.unit,
+    marginBottom: theme.spacing(1),
   },
 });
 

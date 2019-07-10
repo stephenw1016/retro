@@ -6,7 +6,6 @@ import 'react-router-dom';
 // Redux
 import 'redux';
 import 'react-redux';
-import 'redux-thunk';
 
 // HTTP
 import 'axios';

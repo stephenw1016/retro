@@ -44,7 +44,6 @@ const Home = (props: Props) => {
         className={classes.linkButton}
         color="secondary"
         size="large"
-        to={routes.SESSIONS}
         variant="contained"
         onClick={handleJoinDialogOpen}
       >
@@ -62,7 +61,7 @@ const Home = (props: Props) => {
 const styles = theme => ({
   root: {},
   linkButton: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing(1),
   },
 });
 

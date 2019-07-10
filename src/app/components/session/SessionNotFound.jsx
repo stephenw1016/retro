@@ -42,13 +42,13 @@ const styles = theme => ({
     alignItems: 'center',
     display: 'flex',
     flexDirection: 'column',
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
   },
   id: {
     fontWeight: 'bold',
   },
   linkButton: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing(1),
   },
 });
 
