@@ -67,21 +67,23 @@ const retroReducers = (state = initialState, { type, payload }) => {
       const { sessionId, categoryId, vote } = payload;
       const activeSession = state.sessions[sessionId];
 
+      const updatedSessions = {
+        ...state.sessions,
+        [activeSession.id]: {
+          ...activeSession,
+          categories: activeSession.categories
+            .map((category) => {
+              const isActiveCategory = category.id === categoryId;
+              return isActiveCategory
+                ? { ...category, votes: [...category.votes, vote] }
+                : category;
+            }),
+        },
+      };
+
       return {
         ...state,
-        sessions: {
-          ...state.sessions,
-          [activeSession.id]: {
-            ...activeSession,
-            categories: activeSession.categories
-              .map((category) => {
-                const isActiveCategory = category.id === categoryId;
-                return isActiveCategory
-                  ? { ...category, votes: [...category.votes, vote] }
-                  : category;
-              }),
-          },
-        },
+        sessions: updatedSessions,
       };
     }
 

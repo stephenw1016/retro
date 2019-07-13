@@ -49,11 +49,12 @@ const useStyles = makeStyles(theme => ({
     '&$checked': { color: red[500] },
   },
   divider: {
-    margin: `${theme.spacing(2)}px 0`,
+    margin: theme.spacing(2, 0),
   },
   tooltip: {
     backgroundColor: theme.palette.common.white,
     boxShadow: theme.shadows[1],
+    color: 'rgba(0, 0, 0, 0.87)',
     padding: theme.spacing(2),
   },
   tooltipTitle: {
@@ -104,7 +105,7 @@ const Vote = (props: Props) => {
                   </Typography>
                   <Typography variant="subtitle1">Positive</Typography>
                   <Typography variant="body1">{category.description.positive}</Typography>
-                  <Divider component="hr" variant="middle" light />
+                  <Divider className={classes.divider} component="hr" light />
                   <Typography variant="subtitle1">Negative</Typography>
                   <Typography variant="body1">{category.description.negative}</Typography>
                 </>

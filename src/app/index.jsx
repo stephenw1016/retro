@@ -13,7 +13,7 @@ import store from './state';
 
 const UserProfile = lazy(() => import('./components/user-profile/UserProfile'));
 const Home = lazy(() => import('./components/home/Home'));
-const SessionMetrics = lazy(() => import('./components/session/SessionMetrics'));
+const Metrics = lazy(() => import('./components/metrics/MetricsContainer'));
 const NewSessionForm = lazy(() => import('./components/session/NewSessionFormContainer'));
 const Session = lazy(() => import('./components/session/SessionContainer'));
 const SignIn = lazy(() => import('./components/sign-in/SignIn'));
@@ -28,7 +28,7 @@ const App = () => (
       <AuthorizedRoute path={routes.HOME} exact component={Home} />
       <AuthorizedRoute path={routes.SESSION_BY_ID} exact component={Session} />
       <AuthorizedRoute path={routes.NEW_SESSION} exact component={NewSessionForm} />
-      <AuthorizedRoute path={routes.METRICS_BY_ID} exact component={SessionMetrics} />
+      <AuthorizedRoute path={routes.METRICS_BY_ID} exact component={Metrics} />
       <AuthorizedRoute path={routes.USER_PROFILE} exact component={UserProfile} />
     </HashRouter>
   </Provider>
