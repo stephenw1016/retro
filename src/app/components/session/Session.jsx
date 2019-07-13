@@ -6,8 +6,10 @@ import { Button, Grid, LinearProgress, Paper, Typography } from '@material-ui/co
 import Vote from '../vote/Vote';
 import { useSession } from '../../hooks/useSessions';
 import SessionNotFound from './SessionNotFound';
+import { routes } from '../../constants';
 
 type Props = {
+  history: any,
   match: any,
   submitVote: any,
 };
@@ -24,7 +26,7 @@ const useStyles = makeStyles(theme => ({
 
 const Session = (props: Props) => {
   const classes = useStyles();
-  const { match: { params }, submitVote } = props;
+  const { history, match: { params }, submitVote } = props;
   const [categoryIndex, setCategoryIndex] = useState(0);
   const [session] = useSession(params.id);
 
@@ -47,6 +49,7 @@ const Session = (props: Props) => {
       setCategoryIndex(categoryIndex + 1);
     } else {
       console.log('DONE:', session);
+      history.push(`${routes.METRICS}/${session.id}`);
     }
   };
 
