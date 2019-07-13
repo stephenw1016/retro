@@ -16,6 +16,10 @@ export const saveSessionMiddleware = () => next => async (action) => {
   return next(saveSessionSuccess(savedSession));
 };
 
+// function timeout(ms) {
+//   return new Promise(resolve => setTimeout(resolve, ms));
+// }
+
 export const categoryMiddleware = () => next => async (action) => {
   const { type } = action;
 
