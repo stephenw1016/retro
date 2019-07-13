@@ -45,6 +45,8 @@ const Session = (props: Props) => {
     const votingNotDone = categoryIndex !== categories.length - 1;
     if (votingNotDone) {
       setCategoryIndex(categoryIndex + 1);
+    } else {
+      console.log('DONE:', session);
     }
   };
 

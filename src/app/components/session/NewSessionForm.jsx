@@ -5,7 +5,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import format from 'date-fns/format';
 import {
   Button,
-  CircularProgress,
   Grid,
   Paper,
   FormControl,
@@ -17,11 +16,15 @@ import {
 import CategorySelect from './CategorySelect';
 import { routes } from '../../constants';
 import { useAuth } from '../../hooks/useAuth';
-import { useCategories } from '../../hooks/useCategories';
+import type { Category } from '../../types';
 
 type Props = {
+  categories: Array<Category>,
   history: any,
+  requestCategories: any,
   saveSession: any,
+  selectedCategoryIds: Array<string>,
+  setSelectedCategoryIds: any,
 };
 
 const useStyles = makeStyles(theme => ({
@@ -46,18 +49,18 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const NewSessionForm = (props: Props) => {
-  const { history, saveSession } = props;
+  const {
+    categories, history, requestCategories, saveSession,
+    selectedCategoryIds, setSelectedCategoryIds } = props;
   const classes = useStyles();
   const user = useAuth();
   const [name, setName] = useState('New Session');
   const [organization, setOrganization] = useState('');
   const [date, setDate] = useState(format(new Date(), 'YYYY-MM-DD'));
-  const [selectedCategoryIds, setSelectedCategoryIds] = useState([]);
-  const [categories, isError, isLoading] = useCategories();
 
   useEffect(() => {
-    setSelectedCategoryIds(categories.map(({ id }) => id));
-  }, [categories]);
+    requestCategories();
+  }, []);
 
   const handleNameChange = (e) => {
     setName(e.target.value);
@@ -69,6 +72,10 @@ const NewSessionForm = (props: Props) => {
 
   const handleDateChange = (e) => {
     setDate(e.target.value);
+  };
+
+  const handleCategorySelect = (categoryIds) => {
+    setSelectedCategoryIds(categoryIds);
   };
 
   const handleStartSession = () => {
@@ -97,14 +104,6 @@ const NewSessionForm = (props: Props) => {
     InputLabelProps: { shrink: true },
     margin: 'dense',
   };
-
-  if (isError) {
-    return <div>Something went wrong...</div>;
-  }
-
-  if (isLoading) {
-    return <CircularProgress />;
-  }
 
   return (
     <Paper className={classes.root}>
@@ -156,7 +155,7 @@ const NewSessionForm = (props: Props) => {
               className={classes.categorySelect}
               categories={categories}
               selectedCategoryIds={selectedCategoryIds}
-              onChange={setSelectedCategoryIds}
+              onChange={handleCategorySelect}
             />
             <FormHelperText>
               {`Select the categories that your team will vote on.

@@ -8,14 +8,14 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 
 import AuthorizedRoute from './components/routing/AuthorizedRoute';
 import Header from './components/header/Header';
-import Home from './components/home/Home';
-import Session from './components/session/SessionContainer';
-import SignIn from './components/sign-in/SignIn';
-import UserProfile from './components/user-profile/UserProfile';
 import { routes } from './constants';
-import { store } from './state';
+import store from './state';
 
+const UserProfile = lazy(() => import('./components/user-profile/UserProfile'));
+const Home = lazy(() => import('./components/home/Home'));
 const NewSessionForm = lazy(() => import('./components/session/NewSessionFormContainer'));
+const Session = lazy(() => import('./components/session/SessionContainer'));
+const SignIn = lazy(() => import('./components/sign-in/SignIn'));
 
 const App = () => (
   <Provider store={store}>

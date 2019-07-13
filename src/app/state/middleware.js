@@ -1,6 +1,6 @@
-import { SAVE_SESSION_REQUEST } from './types';
-import { saveSession } from '../api';
-import { saveSessionSuccess } from './actions';
+import { REQUEST_CATEGORIES, SAVE_SESSION_REQUEST } from './types';
+import { getCategories, saveSession } from '../api';
+import { receiveCategories, saveSessionSuccess } from './actions';
 
 export const saveSessionMiddleware = () => next => async (action) => {
   const { type, payload } = action;
@@ -11,8 +11,20 @@ export const saveSessionMiddleware = () => next => async (action) => {
 
   const { session } = payload;
   const savedSession = await saveSession(session);
-
   console.info('new session added', savedSession);
 
   return next(saveSessionSuccess(savedSession));
+};
+
+export const categoryMiddleware = () => next => async (action) => {
+  const { type } = action;
+
+  if (type !== REQUEST_CATEGORIES) {
+    return next(action);
+  }
+
+  const categories = await getCategories();
+  console.info('categories requested', categories);
+
+  return next(receiveCategories(categories));
 };

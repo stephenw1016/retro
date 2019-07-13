@@ -1,11 +1,18 @@
 // @flow
 import { connect } from 'react-redux';
-import { saveSessionRequest } from '../../state/actions';
 
 import NewSessionForm from './NewSessionForm';
+import { retroActions, retroSelectors } from '../../state';
 
-const mapDispatchToProps = dispatch => ({
-  saveSession: session => dispatch(saveSessionRequest(session)),
+const mapStateToProps = state => ({
+  categories: retroSelectors.getCategories(state) || [],
+  selectedCategoryIds: state.selectedCategoryIds || [],
 });
 
-export default connect(null, mapDispatchToProps)(NewSessionForm);
+const mapDispatchToProps = dispatch => ({
+  saveSession: session => dispatch(retroActions.saveSessionRequest(session)),
+  setSelectedCategoryIds: categoryIds => dispatch(retroActions.setSelectedCategoryIds(categoryIds)),
+  requestCategories: () => dispatch(retroActions.requestCategories()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(NewSessionForm);
