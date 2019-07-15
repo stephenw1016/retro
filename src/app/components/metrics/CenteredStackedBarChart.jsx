@@ -5,7 +5,6 @@ import {
   BarChart,
   CartesianGrid,
   Legend,
-  ReferenceLine,
   ResponsiveContainer,
   Tooltip,
   XAxis,
@@ -16,24 +15,28 @@ type Props = {
   data: Array<any>
 };
 
-const PyramidChart = (props: Props) => {
+const CenteredStackedBarChart = (props: Props) => {
   const { data } = props;
+  const dataWithNegativeValues = data.map(d => ({ ...d, negative: -d.negative }));
+
+  const itemSorter = (a) => {
+    if (a.title === 'positive') return -1;
+  };
 
   return (
     <ResponsiveContainer>
       <BarChart
         layout="vertical"
-        data={data}
+        data={dataWithNegativeValues}
         margin={{ top: 15, right: 25, left: 15, bottom: 10 }}
         stackOffset="sign"
-        barCategoryGap="40%"
+        barCategoryGap="20%"
       >
         <CartesianGrid strokeDasharray="3 3" />
         <YAxis type="category" dataKey="title" />
         <XAxis type="number" domain={[-100, 100]} />
-        <Tooltip />
+        <Tooltip itemSorter={itemSorter} />
         <Legend />
-        <ReferenceLine y={0} stroke="#000" />
         <Bar dataKey="positive" fill={green[600]} stackId="stack" />
         <Bar dataKey="negative" fill={red[600]} stackId="stack" />
       </BarChart>
@@ -41,4 +44,4 @@ const PyramidChart = (props: Props) => {
   );
 };
 
-export default PyramidChart;
+export default CenteredStackedBarChart;

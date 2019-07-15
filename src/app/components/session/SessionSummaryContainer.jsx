@@ -1,7 +1,7 @@
 // @flow
 import { connect } from 'react-redux';
 
-import Metrics from './Metrics';
+import SessionSummary from './SessionSummary';
 import { getSessionById } from '../../state/selectors';
 
 const testSession = {
@@ -66,8 +66,7 @@ const testSession = {
 //   return { ...prev, [vote.value]: (newValue * 100) / votes.length };
 // }
 const metrics = testSession.categories.map(category => category.votes.reduce((prev, vote, index, votes) => {
-  // const voteWeight = 100 / votes.length;
-  const voteWeight = vote.value === 'negative' ? -(100 / votes.length) : 100 / votes.length;
+  const voteWeight = 100 / votes.length;
   const newValue = prev[vote.value] + voteWeight;
   return { ...prev, [vote.value]: newValue };
 }, { title: category.title, positive: 0, neutral: 0, negative: 0 }));
@@ -76,7 +75,7 @@ console.log('METRICS', metrics);
 const mapStateToProps = (state, ownProps) => ({
   session: testSession,
   metrics,
-  // session: getSessionById(state, ownProps.match.params.sessionId),
+  // session: getSessionById(state, ownProps.match.params.id),
 });
 
-export default connect(mapStateToProps)(Metrics);
+export default connect(mapStateToProps)(SessionSummary);

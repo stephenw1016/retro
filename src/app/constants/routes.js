@@ -2,8 +2,8 @@ const base = '/';
 
 const routes = {
   HOME: `${base}home`,
-  METRICS: `${base}metrics`,
-  METRICS_BY_ID: `${base}metrics/:sessionId`,
+  SESSION_SUMMARY: `${base}session-summary`,
+  SESSION_SUMMARY_BY_ID: `${base}session-summary/:id`,
   NEW_SESSION: `${base}new-session`,
   PRIVACY_POLICY: `${base}privacy-policy`,
   SESSION: `${base}sessions`,

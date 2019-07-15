@@ -49,7 +49,7 @@ const Session = (props: Props) => {
       setCategoryIndex(categoryIndex + 1);
     } else {
       console.log('DONE:', session);
-      history.push(`${routes.METRICS}/${session.id}`);
+      history.push(`${routes.SESSION_SUMMARY}/${session.id}`);
     }
   };
 
