@@ -1,7 +1,7 @@
 // @flow
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Button, Grid, Paper, Typography } from '@material-ui/core';
+import { AppBar, Button, Grid, Paper, Toolbar, Typography } from '@material-ui/core';
 
 import Vote from '../vote/Vote';
 import SessionNotFound from './SessionNotFound';
@@ -18,11 +18,7 @@ type Props = {
 
 const useStyles = makeStyles(theme => ({
   root: {
-    padding: theme.spacing(2),
-  },
-  progressRoot: {
-    height: 8,
-    width: 200,
+    // padding: theme.spacing(2),
   },
 }));
 
@@ -58,6 +54,11 @@ const Session = (props: Props) => {
 
   return (
     <Paper className={classes.root} square elevation={0}>
+      <AppBar position="static" color="default" elevation={0}>
+        <Toolbar>
+          <Typography variant="h6">Voting</Typography>
+        </Toolbar>
+      </AppBar>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
           <Typography variant="h6">{name}</Typography>

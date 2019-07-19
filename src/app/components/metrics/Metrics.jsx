@@ -108,7 +108,7 @@ const Metrics = (props: Props) => {
         <Card className={classes.card} elevation={1}>
           <CardHeader
             {...cardHeaderProps}
-            title="Centered Stacked Bar"
+            title="Positive/Negative"
             subheader="by percentage of votes"
             action={centeredStackedBarTooltip}
           />
@@ -121,7 +121,7 @@ const Metrics = (props: Props) => {
         <Card className={classes.card} elevation={1}>
           <CardHeader
             {...cardHeaderProps}
-            title="Grouped Bar"
+            title="Category Totals"
             subheader="by percentage of votes"
             action={groupedBarTooltip}
           />

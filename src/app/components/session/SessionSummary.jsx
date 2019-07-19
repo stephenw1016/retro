@@ -2,7 +2,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { Typography } from '@material-ui/core';
+import { AppBar, Paper, Toolbar, Typography } from '@material-ui/core';
 import type { Session } from '../../types';
 import Metrics from '../metrics/Metrics';
 
@@ -19,7 +19,12 @@ const SessionSummary = (props: Props) => {
   const classes = useStyles();
 
   return (
-    <div>
+    <Paper square elevation={0}>
+      <AppBar position="static" color="default" elevation={0}>
+        <Toolbar>
+          <Typography variant="h6">Summary</Typography>
+        </Toolbar>
+      </AppBar>
       <Typography variant="h4">
         {session.name}
       </Typography>
@@ -30,7 +35,7 @@ const SessionSummary = (props: Props) => {
         {session.date}
       </Typography>
       <Metrics session={session} />
-    </div>
+    </Paper>
   );
 };
 

@@ -69,7 +69,7 @@ const Header = () => {
           component={Link}
           to={routes.HOME}
         >
-          Retro
+          Team Health Check
         </Typography>
         {user ? (
           <>

@@ -10,7 +10,7 @@ import {
   FormControl,
   FormHelperText,
   InputLabel,
-  Typography, TextField,
+  Typography, TextField, Toolbar, AppBar,
 } from '@material-ui/core';
 
 import CategorySelect from './CategorySelect';
@@ -106,75 +106,79 @@ const NewSessionForm = (props: Props) => {
   };
 
   return (
-    <Paper className={classes.root}>
-      <Typography variant="h5">
-        Create New Session
-      </Typography>
-      <Grid className={classes.form} container alignItems="center" justify="center" spacing={2}>
-        <Grid item xs={12} sm={12}>
-          <TextField
-            {...commonTextFieldProps}
-            required
-            id="nameInput"
-            label="Name"
-            helperText="The name for your session."
-            error={!name}
-            value={name}
-            onChange={handleNameChange}
-          />
-        </Grid>
-        <Grid item xs={12} sm={12}>
-          <TextField
-            {...commonTextFieldProps}
-            id="organizationInput"
-            label="Organization"
-            helperText="The name of your organization."
-            value={organization}
-            onChange={handleOrganizationChange}
-          />
-        </Grid>
-        <Grid item xs={12} sm={12}>
-          <TextField
-            {...commonTextFieldProps}
-            required
-            id="dateInput"
-            label="Date"
-            type="date"
-            helperText="The date your session takes place."
-            error={!date}
-            value={date}
-            onChange={handleDateChange}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <FormControl required fullWidth margin="dense" error={!selectedCategoryIds.length}>
-            <InputLabel htmlFor="categorySelect" shrink>
-              Categories
-            </InputLabel>
-            <CategorySelect
-              className={classes.categorySelect}
-              categories={categories}
-              selectedCategoryIds={selectedCategoryIds}
-              onChange={handleCategorySelect}
+    <>
+      <AppBar position="static" color="default" elevation={0}>
+        <Toolbar>
+          <Typography variant="h6">Create New Session</Typography>
+        </Toolbar>
+      </AppBar>
+      <Paper className={classes.root} square elevation={0}>
+        <Grid className={classes.form} container alignItems="center" justify="center" spacing={2}>
+          <Grid item xs={12} sm={12}>
+            <TextField
+              {...commonTextFieldProps}
+              required
+              id="nameInput"
+              label="Name"
+              helperText="The name for your session."
+              error={!name}
+              value={name}
+              onChange={handleNameChange}
             />
-            <FormHelperText>
-              {`Select the categories that your team will vote on.
+          </Grid>
+          <Grid item xs={12} sm={12}>
+            <TextField
+              {...commonTextFieldProps}
+              id="organizationInput"
+              label="Organization"
+              helperText="The name of your organization."
+              value={organization}
+              onChange={handleOrganizationChange}
+            />
+          </Grid>
+          <Grid item xs={12} sm={12}>
+            <TextField
+              {...commonTextFieldProps}
+              required
+              id="dateInput"
+              label="Date"
+              type="date"
+              helperText="The date your session takes place."
+              error={!date}
+              value={date}
+              onChange={handleDateChange}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <FormControl required fullWidth margin="dense" error={!selectedCategoryIds.length}>
+              <InputLabel htmlFor="categorySelect" shrink>
+              Categories
+              </InputLabel>
+              <CategorySelect
+                className={classes.categorySelect}
+                categories={categories}
+                selectedCategoryIds={selectedCategoryIds}
+                onChange={handleCategorySelect}
+              />
+              <FormHelperText>
+                {`Select the categories that your team will vote on.
                ${selectedCategoryIds.length}/${categories.length} selected.`}
-            </FormHelperText>
-          </FormControl>
-        </Grid>
-        <Grid className={classes.actions} item xs={12}>
-          <Button
-            color="primary"
-            variant="contained"
-            onClick={handleStartSession}
-            disabled={!(name && date && selectedCategoryIds.length)}
-          >
+              </FormHelperText>
+            </FormControl>
+          </Grid>
+          <Grid className={classes.actions} item xs={12}>
+            <Button
+              color="primary"
+              variant="contained"
+              onClick={handleStartSession}
+              disabled={!(name && date && selectedCategoryIds.length)}
+            >
             Start Session
-          </Button>
+            </Button>
+          </Grid>
         </Grid>
-      </Grid>
-    </Paper>
+      </Paper>
+    </>
   );
 };
 
