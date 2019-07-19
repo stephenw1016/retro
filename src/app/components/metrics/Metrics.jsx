@@ -16,7 +16,7 @@ import GroupedBarChart from './GroupedBarChart';
 import CenteredStackedBarChart from './CenteredStackedBarChart';
 
 type Props = {
-  data: any,
+  session: any,
 }
 
 const useStyles = makeStyles(theme => ({
@@ -33,7 +33,7 @@ const useStyles = makeStyles(theme => ({
   },
   tooltip: {
     backgroundColor: theme.palette.common.white,
-    boxShadow: theme.shadows[1],
+    boxShadow: theme.shadows[2],
     color: 'rgba(0, 0, 0, 0.87)',
     padding: theme.spacing(2),
   },
@@ -43,12 +43,18 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Metrics = (props: Props) => {
-  const { data } = props;
+  const { session } = props;
   const classes = useStyles();
   const cardHeaderProps = {
     subheaderTypographyProps: { variant: 'subtitle2' },
     titleTypographyProps: { variant: 'h6' },
   };
+
+  const data = session.categories.map(category => category.votes.reduce((prev, vote, index, votes) => {
+    const voteWeight = 100 / votes.length;
+    const newValue = prev[vote.value] + voteWeight;
+    return { ...prev, [vote.value]: newValue };
+  }, { title: category.title, positive: 0, neutral: 0, negative: 0 }));
 
   const centeredStackedBarTooltip = (
     <Tooltip
@@ -98,7 +104,7 @@ const Metrics = (props: Props) => {
 
   return (
     <Grid container className={classes.root} spacing={1}>
-      <Grid item xs={12} sm={3}>
+      <Grid item xs={12} sm={4}>
         <Card className={classes.card} elevation={1}>
           <CardHeader
             {...cardHeaderProps}
@@ -111,7 +117,7 @@ const Metrics = (props: Props) => {
           </CardContent>
         </Card>
       </Grid>
-      <Grid item xs={12} sm={9}>
+      <Grid item xs={12} sm={8}>
         <Card className={classes.card} elevation={1}>
           <CardHeader
             {...cardHeaderProps}

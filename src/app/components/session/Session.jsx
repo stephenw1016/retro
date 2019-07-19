@@ -1,16 +1,18 @@
 // @flow
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Button, Grid, LinearProgress, Paper, Typography } from '@material-ui/core';
+import { Button, Grid, Paper, Typography } from '@material-ui/core';
 
 import Vote from '../vote/Vote';
-import { useSession } from '../../hooks/useSessions';
 import SessionNotFound from './SessionNotFound';
+import CategoryStepper from './CategoryStepper';
 import { routes } from '../../constants';
+import type { Session as SessionType } from '../../types';
 
 type Props = {
   history: any,
   match: any,
+  session: SessionType,
   submitVote: any,
 };
 
@@ -26,9 +28,8 @@ const useStyles = makeStyles(theme => ({
 
 const Session = (props: Props) => {
   const classes = useStyles();
-  const { history, match: { params }, submitVote } = props;
+  const { history, match: { params }, session, submitVote } = props;
   const [categoryIndex, setCategoryIndex] = useState(0);
-  const [session] = useSession(params.id);
 
   if (!session) {
     return <SessionNotFound sessionId={params.id} />;
@@ -54,7 +55,6 @@ const Session = (props: Props) => {
   };
 
   const category = categories[categoryIndex];
-  const normalise = value => (value) * 100 / (categories.length);
 
   return (
     <Paper className={classes.root} square elevation={0}>
@@ -64,15 +64,9 @@ const Session = (props: Props) => {
           <Typography variant="subtitle1">{`Session ID: ${id}`}</Typography>
           <Typography variant="subtitle1">{`Organization: ${organization}`}</Typography>
           <Typography variant="subtitle1">{`Progress: ${categoryIndex + 1} of ${categories.length}`}</Typography>
-          <LinearProgress
-            classes={{ root: classes.progressRoot }}
-            className={classes.progress}
-            color="secondary"
-            variant="determinate"
-            value={normalise(categoryIndex + 1)}
-          />
         </Grid>
         <Grid item xs={12} sm={6}>
+          <CategoryStepper activeStep={categoryIndex} session={session} />
           <Vote
             key={category.id}
             category={category}
