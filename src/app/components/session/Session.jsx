@@ -53,7 +53,6 @@ const Session = (props: Props) => {
     if (votingNotDone) {
       setCategoryIndex(categoryIndex + 1);
     } else {
-      console.log('DONE:', session);
       history.push(`${routes.SESSION_SUMMARY}/${session.id}`);
     }
   };

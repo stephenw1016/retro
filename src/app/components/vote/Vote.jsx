@@ -49,7 +49,7 @@ const Vote = (props: Props) => {
   const { category, onSubmit } = props;
   const classes = useStyles();
   const voteOptions: Array<VoteValue> = ['positive', 'neutral', 'negative'];
-  const [value, setValue] = useState(null);
+  const [value, setValue] = useState('');
   const [comment, setComment] = useState('');
 
   const options = voteOptions.map((option: VoteValue) => (
