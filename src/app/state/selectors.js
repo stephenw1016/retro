@@ -2,7 +2,6 @@ export const getCategories = state => Object.values(state.categories);
 
 // export const getSessionById = (state, id) => state.sessions[id];
 
-
 const testSession = {
   id: 123,
   name: 'Test Session',
@@ -59,5 +58,12 @@ const testSession = {
   createdBy: 123,
   inProgress: true,
 };
+
+const newDescription = {
+  negative: 'We\'re just pawns in a game of chess with no influence of what we build or how we build.',
+  positive: 'We are in control of our destiny. We know exactly what to build and how to build it.',
+};
+
+testSession.categories = testSession.categories.map(category => ({ ...category, description: newDescription }));
 
 export const getSessionById = (state, id) => testSession;

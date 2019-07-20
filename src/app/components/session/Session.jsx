@@ -1,13 +1,14 @@
 // @flow
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { AppBar, Button, Grid, Paper, Toolbar, Typography } from '@material-ui/core';
+import { AppBar, Box, Button, Divider, Grid, Paper, Toolbar, Typography } from '@material-ui/core';
 
 import Vote from '../vote/Vote';
 import SessionNotFound from './SessionNotFound';
 import CategoryStepper from './CategoryStepper';
 import { routes } from '../../constants';
 import type { Session as SessionType } from '../../types';
+import SessionInfo from './SessionInfo';
 
 type Props = {
   history: any,
@@ -17,8 +18,15 @@ type Props = {
 };
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    // padding: theme.spacing(2),
+  divider: {
+    margin: theme.spacing(2, 0),
+  },
+  question: {
+    marginBottom: theme.spacing(1),
+  },
+  voteContainer: {
+    margin: '0 auto',
+    maxWidth: 500,
   },
 }));
 
@@ -31,7 +39,7 @@ const Session = (props: Props) => {
     return <SessionNotFound sessionId={params.id} />;
   }
 
-  const { id, categories, name, organization } = session;
+  const { categories } = session;
 
   const handleGoBack = () => {
     setCategoryIndex(categoryIndex - 1);
@@ -53,34 +61,45 @@ const Session = (props: Props) => {
   const category = categories[categoryIndex];
 
   return (
-    <Paper className={classes.root} square elevation={0}>
+    <Paper square elevation={0}>
       <AppBar position="static" color="default" elevation={0}>
         <Toolbar>
           <Typography variant="h6">Voting</Typography>
         </Toolbar>
       </AppBar>
       <Grid container spacing={2}>
-        <Grid item xs={12} sm={6}>
-          <Typography variant="h6">{name}</Typography>
-          <Typography variant="subtitle1">{`Session ID: ${id}`}</Typography>
-          <Typography variant="subtitle1">{`Organization: ${organization}`}</Typography>
-          <Typography variant="subtitle1">{`Progress: ${categoryIndex + 1} of ${categories.length}`}</Typography>
+        <Grid item xs={12}>
+          <SessionInfo session={session} />
+          <CategoryStepper activeStep={categoryIndex} session={session} />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <CategoryStepper activeStep={categoryIndex} session={session} />
-          <Vote
-            key={category.id}
-            category={category}
-            onSubmit={handleSubmitVote}
-          />
-          <Button
-            className={classes.button}
-            color="secondary"
-            disabled={!categoryIndex}
-            onClick={handleGoBack}
-          >
-            Go Back
-          </Button>
+          <Box p={8}>
+            <Typography variant="h6" className={classes.question} color="textPrimary">
+              Which sentiment to you most agree with?
+            </Typography>
+            <Typography variant="subtitle1">Positive</Typography>
+            <Typography>{category.description.positive}</Typography>
+            <Divider className={classes.divider} component="hr" light />
+            <Typography variant="subtitle1">Negative</Typography>
+            <Typography>{category.description.negative}</Typography>
+          </Box>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <div className={classes.voteContainer}>
+            <Vote
+              key={category.id}
+              category={category}
+              onSubmit={handleSubmitVote}
+            />
+            <Button
+              className={classes.button}
+              color="secondary"
+              disabled={!categoryIndex}
+              onClick={handleGoBack}
+            >
+              Go Back
+            </Button>
+          </div>
         </Grid>
       </Grid>
     </Paper>

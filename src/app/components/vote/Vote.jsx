@@ -2,25 +2,20 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { green, yellow, red } from '@material-ui/core/colors';
-import InfoIcon from '@material-ui/icons/InfoOutlined';
 import {
   Button,
   Card,
   CardActions,
   CardContent,
   CardHeader,
-  Divider,
   FormControl,
   FormControlLabel,
   FormLabel,
   Grid,
   Grow,
-  IconButton,
   Radio,
   RadioGroup,
   TextField,
-  Tooltip,
-  Typography,
 } from '@material-ui/core';
 
 import type { VoteValue } from './types';
@@ -47,18 +42,6 @@ const useStyles = makeStyles(theme => ({
   negative: {
     color: red[600],
     '&$checked': { color: red[500] },
-  },
-  divider: {
-    margin: theme.spacing(2, 0),
-  },
-  tooltip: {
-    backgroundColor: theme.palette.common.white,
-    boxShadow: theme.shadows[1],
-    color: 'rgba(0, 0, 0, 0.87)',
-    padding: theme.spacing(2),
-  },
-  tooltipTitle: {
-    marginBottom: theme.spacing(1),
   },
 }));
 
@@ -90,32 +73,10 @@ const Vote = (props: Props) => {
     onSubmit({ value, comment });
   };
 
-  const categoryTooltip = (
-    <Tooltip
-      classes={{ tooltip: classes.tooltip }}
-      title={(
-        <>
-          <Typography className={classes.tooltipTitle} variant="caption">
-            Which sentiment to you most agree with?
-          </Typography>
-          <Typography variant="subtitle1">Positive</Typography>
-          <Typography variant="body1">{category.description.positive}</Typography>
-          <Divider className={classes.divider} component="hr" light />
-          <Typography variant="subtitle1">Negative</Typography>
-          <Typography variant="body1">{category.description.negative}</Typography>
-        </>
-      )}
-    >
-      <IconButton disableRipple aria-label="info">
-        <InfoIcon />
-      </IconButton>
-    </Tooltip>
-  );
-
   return (
     <Grow in mountOnEnter unmountOnExit timeout={300}>
       <Card className={classes.root} elevation={2}>
-        <CardHeader title={category.title} action={categoryTooltip} />
+        <CardHeader title={category.title} />
         <CardContent>
           <Grid item xs={12}>
             <FormControl fullWidth component="fieldset" required>
