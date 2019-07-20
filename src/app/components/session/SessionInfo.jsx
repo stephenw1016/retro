@@ -50,7 +50,7 @@ const SessionInfo = (props: Props) => {
         onMouseEnter={handlePopoverOpen}
         onMouseLeave={handlePopoverClose}
       >
-        <Typography color="primary" variant="h5">{session.name}</Typography>
+        <Typography color="secondary" variant="h5">{session.name}</Typography>
         <Typography variant="subtitle2">
           <span>Session ID: </span>
           <span>{session.id}</span>
