@@ -41,15 +41,20 @@ const Session = (props: Props) => {
 
   const { categories } = session;
 
+  const handleNext = () => {
+    setCategoryIndex(categoryIndex + 1);
+  };
+
   const handleGoBack = () => {
     setCategoryIndex(categoryIndex - 1);
   };
 
   const handleSubmitVote = (vote) => {
     const { id: categoryId } = categories[categoryIndex];
+    const votingNotDone = categoryIndex !== categories.length - 1;
+
     submitVote(session.id, categoryId, vote);
 
-    const votingNotDone = categoryIndex !== categories.length - 1;
     if (votingNotDone) {
       setCategoryIndex(categoryIndex + 1);
     } else {
@@ -90,17 +95,31 @@ const Session = (props: Props) => {
               category={category}
               onSubmit={handleSubmitVote}
             />
-            <Button
-              className={classes.button}
-              color="secondary"
-              disabled={!categoryIndex}
-              onClick={handleGoBack}
-            >
-              Go Back
-            </Button>
           </div>
         </Grid>
       </Grid>
+      <Box
+        display="flex"
+        justifyContent="center"
+        p={3}
+      >
+        <Button
+          className={classes.button}
+          color="secondary"
+          disabled={!categoryIndex}
+          onClick={handleGoBack}
+        >
+          Go Back
+        </Button>
+        <Button
+          className={classes.button}
+          color="primary"
+          onClick={handleNext}
+          variant="contained"
+        >
+          Next Category
+        </Button>
+      </Box>
     </Paper>
   );
 };
