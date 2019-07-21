@@ -41,7 +41,7 @@ const SessionNotFound = (props: Props) => {
       </Typography>
       <Button
         className={classes.linkButton}
-        color="secondary"
+        color="primary"
         component={Link}
         to={routes.NEW_SESSION}
         variant="contained"

@@ -1,5 +1,5 @@
 // @flow
-import React, { useState } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { AppBar, Box, Button, Divider, Grid, Paper, Toolbar, Typography } from '@material-ui/core';
 
@@ -15,6 +15,8 @@ type Props = {
   match: any,
   session: SessionType,
   submitVote: any,
+  nextCategory: any,
+  previousCategory: any,
 };
 
 const useStyles = makeStyles(theme => ({
@@ -31,38 +33,24 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Session = (props: Props) => {
-  const classes = useStyles();
-  const { history, match: { params }, session, submitVote } = props;
-  const [categoryIndex, setCategoryIndex] = useState(0);
+  const { history, match: { params }, nextCategory, previousCategory, session, submitVote } = props;
 
   if (!session) {
     return <SessionNotFound sessionId={params.id} />;
   }
 
-  const { categories } = session;
+  if (session.isComplete) {
+    history.push(`${routes.SESSION_SUMMARY}/${session.id}`);
+  }
 
-  const handleNext = () => {
-    setCategoryIndex(categoryIndex + 1);
-  };
-
-  const handleGoBack = () => {
-    setCategoryIndex(categoryIndex - 1);
-  };
+  const classes = useStyles();
+  const { categoryIndex, categories } = session;
+  const category = categories[categoryIndex];
 
   const handleSubmitVote = (vote) => {
     const { id: categoryId } = categories[categoryIndex];
-    const votingNotDone = categoryIndex !== categories.length - 1;
-
-    submitVote(session.id, categoryId, vote);
-
-    if (votingNotDone) {
-      setCategoryIndex(categoryIndex + 1);
-    } else {
-      history.push(`${routes.SESSION_SUMMARY}/${session.id}`);
-    }
+    submitVote(categoryId, vote);
   };
-
-  const category = categories[categoryIndex];
 
   return (
     <Paper square elevation={0}>
@@ -98,23 +86,20 @@ const Session = (props: Props) => {
           </div>
         </Grid>
       </Grid>
-      <Box
-        display="flex"
-        justifyContent="center"
-        p={3}
-      >
+      <Box display="flex" justifyContent="center" p={3}>
         <Button
           className={classes.button}
           color="secondary"
           disabled={!categoryIndex}
-          onClick={handleGoBack}
+          onClick={previousCategory}
         >
           Go Back
         </Button>
         <Button
           className={classes.button}
           color="primary"
-          onClick={handleNext}
+          onClick={nextCategory}
+          disabled={categoryIndex === categories.length - 1}
           variant="contained"
         >
           Next Category

@@ -20,8 +20,9 @@ export type Session = {
   date: string,
   name: string,
   organization: string,
+  categoryIndex: number,
   categories: Array<Category>,
   createDate: string,
   createdBy: string,
-  inProgress: boolean,
+  isComplete: boolean,
 };

@@ -1,4 +1,7 @@
 import {
+  END_SESSION,
+  PREVIOUS_CATEGORY,
+  NEXT_CATEGORY,
   RECEIVE_CATEGORIES,
   REQUEST_CATEGORIES,
   SAVE_SESSION_REQUEST,
@@ -6,6 +9,28 @@ import {
   SET_SELECTED_CATEGORY_IDS,
   SUBMIT_VOTE,
 } from './types';
+
+export const endSession = sessionId => ({
+  type: END_SESSION,
+  payload: {
+    sessionId,
+  },
+});
+
+export const previousCategory = sessionId => ({
+  type: PREVIOUS_CATEGORY,
+  payload: {
+    sessionId,
+  },
+});
+
+export const nextCategory = sessionId => ({
+  type: NEXT_CATEGORY,
+  payload: {
+    sessionId,
+  },
+});
+
 
 export const receiveCategories = categories => ({
   type: RECEIVE_CATEGORIES,

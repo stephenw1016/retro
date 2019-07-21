@@ -92,7 +92,7 @@ const NewSessionForm = (props: Props) => {
       categories: sessionCategories,
       createDate: format(Date.now()),
       createdBy: user.uid,
-      inProgress: true,
+      categoryIndex: 0,
     };
 
     saveSession(session);
