@@ -18,11 +18,12 @@ import {
   TextField,
 } from '@material-ui/core';
 
-import type { VoteValue } from './types';
+import type { Vote as VoteType, VoteValue } from './types';
 
 type Props = {
   category: any,
   onSubmit: any,
+  vote: VoteType,
 };
 
 const useStyles = makeStyles(theme => ({
@@ -46,11 +47,11 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Vote = (props: Props) => {
-  const { category, onSubmit } = props;
+  const { category, onSubmit, vote } = props;
   const classes = useStyles();
   const voteOptions: Array<VoteValue> = ['positive', 'neutral', 'negative'];
-  const [value, setValue] = useState('');
-  const [comment, setComment] = useState('');
+  const [value, setValue] = useState(vote ? vote.value : '');
+  const [comment, setComment] = useState(vote ? vote.comment : '');
 
   const options = voteOptions.map((option: VoteValue) => (
     <FormControlLabel

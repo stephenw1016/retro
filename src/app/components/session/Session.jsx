@@ -3,20 +3,21 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { AppBar, Box, Button, Divider, Grid, Paper, Toolbar, Typography } from '@material-ui/core';
 
-import Vote from '../vote/Vote';
-import SessionNotFound from './SessionNotFound';
 import CategoryStepper from './CategoryStepper';
+import SessionInfo from './SessionInfo';
+import SessionNotFound from './SessionNotFound';
+import Vote from '../vote/Vote';
 import { routes } from '../../constants';
 import type { Session as SessionType } from '../../types';
-import SessionInfo from './SessionInfo';
 
 type Props = {
   history: any,
   match: any,
-  session: SessionType,
-  submitVote: any,
   nextCategory: any,
   previousCategory: any,
+  session: SessionType,
+  submitVote: any,
+  user: any,
 };
 
 const useStyles = makeStyles(theme => ({
@@ -33,7 +34,12 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Session = (props: Props) => {
-  const { history, match: { params }, nextCategory, previousCategory, session, submitVote } = props;
+  const {
+    user: { uid }, history, match: { params }, nextCategory,
+    previousCategory, session, submitVote,
+  } = props;
+
+  const participantCount = 1;
 
   if (!session) {
     return <SessionNotFound sessionId={params.id} />;
@@ -46,10 +52,13 @@ const Session = (props: Props) => {
   const classes = useStyles();
   const { categoryIndex, categories } = session;
   const category = categories[categoryIndex];
+  const hasAllVotes = Object.values(category.votes || {}).length === participantCount;
+  const isLastCategory = categoryIndex === categories.length - 1;
+  const currentVote = (category.votes || {})[uid];
 
   const handleSubmitVote = (vote) => {
     const { id: categoryId } = categories[categoryIndex];
-    submitVote(categoryId, vote);
+    submitVote(uid, categoryId, vote);
   };
 
   return (
@@ -81,6 +90,7 @@ const Session = (props: Props) => {
             <Vote
               key={category.id}
               category={category}
+              vote={currentVote || {}}
               onSubmit={handleSubmitVote}
             />
           </div>
@@ -99,10 +109,10 @@ const Session = (props: Props) => {
           className={classes.button}
           color="primary"
           onClick={nextCategory}
-          disabled={categoryIndex === categories.length - 1}
+          disabled={!hasAllVotes}
           variant="contained"
         >
-          Next Category
+          {isLastCategory ? 'View Results' : 'Next Category'}
         </Button>
       </Box>
     </Paper>

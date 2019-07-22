@@ -65,9 +65,10 @@ export const setSelectedCategoryIds = selectedCategoryIds => ({
   },
 });
 
-export const submitVote = (sessionId, categoryId, vote) => ({
+export const submitVote = (userId, sessionId, categoryId, vote) => ({
   type: SUBMIT_VOTE,
   payload: {
+    userId,
     sessionId,
     categoryId,
     vote,

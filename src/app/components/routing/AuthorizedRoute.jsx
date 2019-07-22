@@ -18,7 +18,7 @@ const AuthorizedRoute = ({ component: Component, ...rest }: Props) => {
       <Route
         {...rest}
         render={props => (
-          user ? <Component {...props} /> : <Redirect to={routes.SIGN_IN} />
+          user ? <Component user={user} {...props} /> : <Redirect to={routes.SIGN_IN} />
         )}
       />
     </Suspense>

@@ -81,7 +81,7 @@ const NewSessionForm = (props: Props) => {
   const handleStartSession = () => {
     const sessionCategories = selectedCategoryIds.map((id) => {
       const category = categories.find(c => c.id === id);
-      return { ...category, id, votes: [] };
+      return { ...category, id, votes: {} };
     });
 
     const session = {

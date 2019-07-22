@@ -13,7 +13,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   const sessionId = ownProps.match.params.id;
 
   return ({
-    submitVote: (categoryId, vote) => dispatch(submitVote(sessionId, categoryId, vote)),
+    submitVote: (userId, categoryId, vote) => dispatch(submitVote(userId, sessionId, categoryId, vote)),
     previousCategory: () => dispatch(previousCategory(sessionId)),
     nextCategory: () => dispatch(nextCategory(sessionId)),
   });

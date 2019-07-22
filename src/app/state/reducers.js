@@ -19,45 +19,45 @@ const testSession = {
       id: 'category-1',
       title: 'Category 1',
       description: { positive: 'p', negative: 'n' },
-      votes: [
-        { value: 'positive', comment: '' },
-        { value: 'positive', comment: '' },
-        { value: 'negative', comment: '' },
-        { value: 'negative', comment: '' },
-      ],
+      votes: {
+        fakeId1: { value: 'positive', comment: '' },
+        fakeId4: { value: 'positive', comment: '' },
+        fakeId2: { value: 'negative', comment: '' },
+        fakeId3: { value: 'negative', comment: '' },
+      },
     },
     {
       id: 'category-2',
       title: 'Category 2',
       description: { positive: 'p', negative: 'n' },
-      votes: [
-        { value: 'negative', comment: '' },
-        { value: 'neutral', comment: '' },
-        { value: 'negative', comment: '' },
-        { value: 'positive', comment: '' },
-      ],
+      votes: {
+        fakeId1: { value: 'negative', comment: '' },
+        fakeId2: { value: 'neutral', comment: '' },
+        fakeId3: { value: 'negative', comment: '' },
+        fakeId4: { value: 'positive', comment: '' },
+      },
     },
     {
       id: 'category-3',
       title: 'Category 3',
       description: { positive: 'p', negative: 'n' },
-      votes: [
-        { value: 'negative', comment: '' },
-        { value: 'negative', comment: '' },
-        { value: 'negative', comment: '' },
-        { value: 'positive', comment: '' },
-      ],
+      votes: {
+        fakeId1: { value: 'negative', comment: '' },
+        fakeId2: { value: 'negative', comment: '' },
+        fakeId3: { value: 'negative', comment: '' },
+        fakeId4: { value: 'positive', comment: '' },
+      },
     },
     {
       id: 'category-4',
       title: 'Category 4',
       description: { positive: 'p', negative: 'n' },
-      votes: [
-        { value: 'negative', comment: '' },
-        { value: 'negative', comment: '' },
-        { value: 'negative', comment: '' },
-        { value: 'positive', comment: '' },
-      ],
+      votes: {
+        fakeId1: { value: 'negative', comment: '' },
+        fakeId2: { value: 'negative', comment: '' },
+        fakeId3: { value: 'negative', comment: '' },
+        fakeId4: { value: 'positive', comment: '' },
+      },
     },
   ],
   selectedCategoryIds: [],
@@ -140,7 +140,7 @@ const retroReducers = (state = initialState, { type, payload }) => {
       return {
         ...state,
         categories,
-        selectedCategoryIds: categories.map(({ id }) => id),
+        // selectedCategoryIds: categories.map(({ id }) => id),
       };
     }
 
@@ -169,7 +169,7 @@ const retroReducers = (state = initialState, { type, payload }) => {
     }
 
     case SUBMIT_VOTE: {
-      const { sessionId, categoryId, vote } = payload;
+      const { userId, sessionId, categoryId, vote } = payload;
       const activeSession = state.sessions[sessionId];
 
       const updatedSessions = {
@@ -180,7 +180,7 @@ const retroReducers = (state = initialState, { type, payload }) => {
             .map((category) => {
               const isActiveCategory = category.id === categoryId;
               return isActiveCategory
-                ? { ...category, votes: [...category.votes, vote] }
+                ? { ...category, votes: { ...category.votes, [userId]: vote } }
                 : category;
             }),
         },
