@@ -50,11 +50,16 @@ const Metrics = (props: Props) => {
     titleTypographyProps: { variant: 'h6' },
   };
 
-  const data = session.categories.map(category => category.votes.reduce((prev, vote, index, votes) => {
-    const voteWeight = 100 / votes.length;
-    const newValue = prev[vote.value] + voteWeight;
-    return { ...prev, [vote.value]: newValue };
-  }, { title: category.title, positive: 0, neutral: 0, negative: 0 }));
+  const data = session.categories.map((category) => {
+    const categoryVotes = Object.values(category.votes || {});
+    const defaultCategoryMetric = { title: category.title, positive: 0, neutral: 0, negative: 0 };
+
+    return categoryVotes.reduce((prev, vote, index, votes) => {
+      const voteWeight = 100 / votes.length;
+      const newValue = prev[vote.value] + voteWeight;
+      return { ...prev, [vote.value]: newValue };
+    }, defaultCategoryMetric);
+  });
 
   const centeredStackedBarTooltip = (
     <Tooltip

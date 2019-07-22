@@ -28,7 +28,6 @@ export const categoryMiddleware = () => next => async (action) => {
   }
 
   const categories = await getCategories();
-  console.info('categories requested', categories);
 
   return next(receiveCategories(categories));
 };

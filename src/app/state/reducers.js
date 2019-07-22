@@ -140,7 +140,7 @@ const retroReducers = (state = initialState, { type, payload }) => {
       return {
         ...state,
         categories,
-        // selectedCategoryIds: categories.map(({ id }) => id),
+        selectedCategoryIds: categories.map(({ id }) => id),
       };
     }
 

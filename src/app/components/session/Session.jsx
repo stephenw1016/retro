@@ -21,6 +21,9 @@ type Props = {
 };
 
 const useStyles = makeStyles(theme => ({
+  categoryContent: {
+    padding: theme.spacing(2),
+  },
   divider: {
     margin: theme.spacing(2, 0),
   },
@@ -61,6 +64,10 @@ const Session = (props: Props) => {
     submitVote(uid, categoryId, vote);
   };
 
+  const handleViewResults = () => {
+    history.push(`${routes.SESSION_SUMMARY}/${session.id}`);
+  };
+
   return (
     <Paper square elevation={0}>
       <AppBar position="static" color="default" elevation={0}>
@@ -68,13 +75,11 @@ const Session = (props: Props) => {
           <Typography variant="h6">Voting</Typography>
         </Toolbar>
       </AppBar>
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <SessionInfo session={session} />
-          <CategoryStepper activeStep={categoryIndex} session={session} />
-        </Grid>
+      <SessionInfo session={session} />
+      <CategoryStepper activeStep={categoryIndex} session={session} />
+      <Grid container className={classes.categoryContent}>
         <Grid item xs={12} sm={6}>
-          <Box p={8}>
+          <Box p={3}>
             <Typography variant="h6" className={classes.question} color="textPrimary">
               Which sentiment to you most agree with?
             </Typography>
@@ -86,14 +91,14 @@ const Session = (props: Props) => {
           </Box>
         </Grid>
         <Grid item xs={12} sm={6}>
-          <div className={classes.voteContainer}>
+          <Box p={3}>
             <Vote
               key={category.id}
               category={category}
-              vote={currentVote || {}}
+              vote={currentVote}
               onSubmit={handleSubmitVote}
             />
-          </div>
+          </Box>
         </Grid>
       </Grid>
       <Box display="flex" justifyContent="center" p={3}>
@@ -108,7 +113,7 @@ const Session = (props: Props) => {
         <Button
           className={classes.button}
           color="primary"
-          onClick={nextCategory}
+          onClick={isLastCategory ? handleViewResults : nextCategory}
           disabled={!hasAllVotes}
           variant="contained"
         >
