@@ -69,7 +69,7 @@ const SessionInfo = (props: Props) => {
       >
         <div className={classes.field}>
           <Typography {...fieldLabelProps}>Organization</Typography>
-          <Typography {...fieldValueProps}>{session.organization}</Typography>
+          <Typography {...fieldValueProps}>{session.organization || '--'}</Typography>
         </div>
         <div className={classes.field}>
           <Typography {...fieldLabelProps}>Date</Typography>
