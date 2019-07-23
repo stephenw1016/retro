@@ -12,8 +12,9 @@ import {
   Typography,
 } from '@material-ui/core';
 
-import GroupedBarChart from './GroupedBarChart';
+import CategoryTable from './CategoryTable';
 import CenteredStackedBarChart from './CenteredStackedBarChart';
+import GroupedBarChart from './GroupedBarChart';
 
 type Props = {
   session: any,
@@ -22,6 +23,8 @@ type Props = {
 const useStyles = makeStyles(theme => ({
   root: {
     padding: theme.spacing(1),
+    margin: 0,
+    width: '100%',
   },
   card: {},
   cardContent: {
@@ -66,15 +69,14 @@ const Metrics = (props: Props) => {
       classes={{ tooltip: classes.tooltip }}
       title={(
         <>
-          <Typography className={classes.tooltipTitle} color="primary">
+          <Typography className={classes.tooltipTitle} variant="h6">
             What is a Centered Stacked Bar Chart?
           </Typography>
           <Typography>
             A bar chart which places the count or percentage in a typical bar chart format,
-            but removes the neutral response category in order to place the right end of the negative
-            category subdivision at the same position of the left end of the positive category subdivision.
-            This creates a central line dividing positive from negative votes, allowing for the skew
-            between them to be seen more easily.
+            but removes the neutral response category in order to juxtapose the right end of the negative
+            category with the left end of the positive category. This creates a central line
+            dividing positive from negative votes, highlighting any skew between.
           </Typography>
         </>
       )}
@@ -90,11 +92,11 @@ const Metrics = (props: Props) => {
       classes={{ tooltip: classes.tooltip }}
       title={(
         <>
-          <Typography className={classes.tooltipTitle} color="primary">
+          <Typography className={classes.tooltipTitle} variant="h6">
             What is a Grouped Bar Chart?
           </Typography>
           <Typography>
-            For comparison across categories, it is sometimes useful to show several
+            For comparison across categories, it is useful to show several
             votes in the same bar chart by placing different colored bars side by side,
             with each color corresponding to a different sentiment.
           </Typography>
@@ -108,7 +110,7 @@ const Metrics = (props: Props) => {
   );
 
   return (
-    <Grid container className={classes.root} spacing={1}>
+    <Grid container className={classes.root} spacing={2}>
       <Grid item xs={12} sm={4}>
         <Card className={classes.card} elevation={1}>
           <CardHeader
@@ -132,6 +134,18 @@ const Metrics = (props: Props) => {
           />
           <CardContent className={classes.cardContent}>
             <GroupedBarChart data={data} />
+          </CardContent>
+        </Card>
+      </Grid>
+      <Grid item xs={12}>
+        <Card className={classes.card} elevation={1}>
+          <CardHeader
+            {...cardHeaderProps}
+            title="Category Data"
+            action={groupedBarTooltip}
+          />
+          <CardContent className={classes.cardContent}>
+            <CategoryTable />
           </CardContent>
         </Card>
       </Grid>
