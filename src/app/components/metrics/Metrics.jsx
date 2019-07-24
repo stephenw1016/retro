@@ -65,12 +65,10 @@ const Metrics = (props: Props) => {
     titleTypographyProps: { variant: 'h6' },
   };
 
-
-  const enabledCategories = session.categories.filter(category => filter.selectedCategoryIds.includes(category.id));
-
-  const data = enabledCategories.map((category) => {
+  const data = session.categories.map((category) => {
     const categoryVotes = Object.values(category.votes || {});
-    const defaultCategoryMetric = { title: category.title, positive: 0, neutral: 0, negative: 0 };
+    const { id, title } = category;
+    const defaultCategoryMetric = { id, title, positive: 0, neutral: 0, negative: 0 };
 
     return categoryVotes.reduce((prev, vote, index, votes) => {
       const voteWeight = 100 / votes.length;
@@ -85,7 +83,14 @@ const Metrics = (props: Props) => {
     return value >= min && value <= max;
   };
 
-  const filteredData = data.filter(dataPoint => isInRange('positive', dataPoint) && isInRange('neutral', dataPoint) && isInRange('negative', dataPoint));
+  const filteredData = data.filter((dataPoint) => {
+    const matchesRanges = isInRange('positive', dataPoint)
+      && isInRange('neutral', dataPoint)
+      && isInRange('negative', dataPoint);
+    return filter.selectedCategoryIds.includes(dataPoint.id) && matchesRanges;
+  });
+  const filteredIdMap = filteredData.reduce((ids, dataPoint) => ({ ...ids, [dataPoint.id]: dataPoint }), Object.create(null));
+  const enabledCategories = session.categories.filter(category => filteredIdMap[category.id]);
 
   const centeredStackedBarTooltip = (
     <Tooltip

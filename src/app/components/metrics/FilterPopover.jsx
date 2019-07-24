@@ -60,11 +60,11 @@ const FilterPopover = (props: Props) => {
   };
 
   const handleCategorySelect = (categoryIds) => {
-    onChange({ ...filter, selectedCategoryIds: categoryIds });
+    setLocalFilter({ ...localFilter, selectedCategoryIds: categoryIds });
   };
 
   const handleRangeChange = rangeKey => (value) => {
-    onChange({ ...filter, [rangeKey]: value });
+    setLocalFilter({ ...localFilter, [rangeKey]: value });
   };
 
   const handleApply = () => {
@@ -95,28 +95,36 @@ const FilterPopover = (props: Props) => {
           classes={{ root: classes.positive }}
           label="Positive"
           onChange={handleRangeChange('positive')}
-          value={filter.positive}
+          value={localFilter.positive}
         />
         <RangeSlider
           classes={{ root: classes.neutral }}
           label="Neutral"
           onChange={handleRangeChange('neutral')}
-          value={filter.neutral}
+          value={localFilter.neutral}
         />
         <RangeSlider
           classes={{ root: classes.negative }}
           label="Negative"
           onChange={handleRangeChange('negative')}
-          value={filter.negative}
+          value={localFilter.negative}
         />
         <Divider className={classes.divider} component="hr" light />
         <Typography {...typographyProps}>Filter by Category</Typography>
         <CategorySelect
           classes={{ root: classes.categorySelect }}
           categories={categories}
-          selectedCategoryIds={filter.selectedCategoryIds}
+          selectedCategoryIds={localFilter.selectedCategoryIds}
           onChange={handleCategorySelect}
         />
+        <Button
+          color="primary"
+          fullWidth
+          onClick={handleApply}
+          variant="contained"
+        >
+          Apply Filter
+        </Button>
       </Popover>
     </div>
   );
