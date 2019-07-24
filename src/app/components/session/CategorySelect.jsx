@@ -15,7 +15,6 @@ import type { Category } from '../../types';
 
 type Props = {
   categories: Array<Category>,
-  classes: {},
   onChange: Function,
   selectedCategoryIds: Array<string>,
 };

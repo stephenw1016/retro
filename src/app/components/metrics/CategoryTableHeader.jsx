@@ -2,27 +2,23 @@ import React from 'react';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
-import Checkbox from '@material-ui/core/Checkbox';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 
 const headRows = [
-  { id: 'name', numeric: false, disablePadding: true, label: 'Name' },
+  { id: 'title', numeric: false, disablePadding: true, label: 'Title' },
   { id: 'positive', numeric: true, disablePadding: false, label: 'Positive' },
   { id: 'neutral', numeric: true, disablePadding: false, label: 'Neutral' },
   { id: 'negative', numeric: true, disablePadding: false, label: 'Negative' },
 ];
 
 type Props = {
-  numSelected: number,
   onRequestSort: any,
-  onSelectAllClick: any,
   order: string,
   orderBy: string,
-  rowCount: number,
 };
 
 const CategoryTableHeader = (props: Props) => {
-  const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
+  const { order, orderBy, onRequestSort } = props;
 
   const createSortHandler = property => (event) => {
     onRequestSort(event, property);
@@ -31,14 +27,6 @@ const CategoryTableHeader = (props: Props) => {
   return (
     <TableHead>
       <TableRow>
-        <TableCell padding="checkbox">
-          <Checkbox
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{ 'aria-label': 'Select all desserts' }}
-          />
-        </TableCell>
         {headRows.map(row => (
           <TableCell
             key={row.id}

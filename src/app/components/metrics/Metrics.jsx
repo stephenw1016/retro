@@ -1,5 +1,5 @@
 // @flow
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import InfoIcon from '@material-ui/icons/InfoOutlined';
 import {
@@ -14,6 +14,7 @@ import {
 
 import CategoryTable from './CategoryTable';
 import CenteredStackedBarChart from './CenteredStackedBarChart';
+import FilterPopover from './FilterPopover';
 import GroupedBarChart from './GroupedBarChart';
 
 type Props = {
@@ -48,12 +49,15 @@ const useStyles = makeStyles(theme => ({
 const Metrics = (props: Props) => {
   const { session } = props;
   const classes = useStyles();
+  const [selectedCategoryIds, setSelectedCategoryIds] = useState(session.categories.map(({ id }) => id));
+
   const cardHeaderProps = {
     subheaderTypographyProps: { variant: 'subtitle2' },
     titleTypographyProps: { variant: 'h6' },
   };
 
-  const data = session.categories.map((category) => {
+  const enabledCategories = session.categories.filter(({ id }) => selectedCategoryIds.includes(id));
+  const data = enabledCategories.map((category) => {
     const categoryVotes = Object.values(category.votes || {});
     const defaultCategoryMetric = { title: category.title, positive: 0, neutral: 0, negative: 0 };
 
@@ -111,6 +115,13 @@ const Metrics = (props: Props) => {
 
   return (
     <Grid container className={classes.root} spacing={2}>
+      <Grid item xs={12}>
+        <FilterPopover
+          categories={session.categories}
+          onCategorySelect={setSelectedCategoryIds}
+          selectedCategoryIds={selectedCategoryIds}
+        />
+      </Grid>
       <Grid item xs={12} sm={4}>
         <Card className={classes.card} elevation={1}>
           <CardHeader
@@ -139,13 +150,9 @@ const Metrics = (props: Props) => {
       </Grid>
       <Grid item xs={12}>
         <Card className={classes.card} elevation={1}>
-          <CardHeader
-            {...cardHeaderProps}
-            title="Category Data"
-            action={groupedBarTooltip}
-          />
+          <CardHeader {...cardHeaderProps} title="Category Data" />
           <CardContent className={classes.cardContent}>
-            <CategoryTable />
+            <CategoryTable categories={enabledCategories} onSelect={setSelectedCategoryIds} />
           </CardContent>
         </Card>
       </Grid>
