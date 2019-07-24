@@ -49,14 +49,25 @@ const useStyles = makeStyles(theme => ({
 const Metrics = (props: Props) => {
   const { session } = props;
   const classes = useStyles();
-  const [selectedCategoryIds, setSelectedCategoryIds] = useState(session.categories.map(({ id }) => id));
+  const [filter, setFilter] = useState({
+    positive: [0, 100],
+    neutral: [0, 100],
+    negative: [0, 100],
+    selectedCategoryIds: session.categories.map(({ id }) => id),
+  });
+
+  const handleFilterChange = (newFilter) => {
+    setFilter(newFilter);
+  };
 
   const cardHeaderProps = {
     subheaderTypographyProps: { variant: 'subtitle2' },
     titleTypographyProps: { variant: 'h6' },
   };
 
-  const enabledCategories = session.categories.filter(({ id }) => selectedCategoryIds.includes(id));
+
+  const enabledCategories = session.categories.filter(category => filter.selectedCategoryIds.includes(category.id));
+
   const data = enabledCategories.map((category) => {
     const categoryVotes = Object.values(category.votes || {});
     const defaultCategoryMetric = { title: category.title, positive: 0, neutral: 0, negative: 0 };
@@ -67,6 +78,14 @@ const Metrics = (props: Props) => {
       return { ...prev, [vote.value]: newValue };
     }, defaultCategoryMetric);
   });
+
+  const isInRange = (key, dataPoint) => {
+    const [min, max] = filter[key];
+    const value = dataPoint[key];
+    return value >= min && value <= max;
+  };
+
+  const filteredData = data.filter(dataPoint => isInRange('positive', dataPoint) && isInRange('neutral', dataPoint) && isInRange('negative', dataPoint));
 
   const centeredStackedBarTooltip = (
     <Tooltip
@@ -118,8 +137,8 @@ const Metrics = (props: Props) => {
       <Grid item xs={12}>
         <FilterPopover
           categories={session.categories}
-          onCategorySelect={setSelectedCategoryIds}
-          selectedCategoryIds={selectedCategoryIds}
+          filter={filter}
+          onChange={handleFilterChange}
         />
       </Grid>
       <Grid item xs={12} sm={4}>
@@ -131,7 +150,7 @@ const Metrics = (props: Props) => {
             action={centeredStackedBarTooltip}
           />
           <CardContent className={classes.cardContent}>
-            <CenteredStackedBarChart data={data} />
+            <CenteredStackedBarChart data={filteredData} />
           </CardContent>
         </Card>
       </Grid>
@@ -144,7 +163,7 @@ const Metrics = (props: Props) => {
             action={groupedBarTooltip}
           />
           <CardContent className={classes.cardContent}>
-            <GroupedBarChart data={data} />
+            <GroupedBarChart data={filteredData} />
           </CardContent>
         </Card>
       </Grid>
@@ -152,7 +171,7 @@ const Metrics = (props: Props) => {
         <Card className={classes.card} elevation={1}>
           <CardHeader {...cardHeaderProps} title="Category Data" />
           <CardContent className={classes.cardContent}>
-            <CategoryTable categories={enabledCategories} onSelect={setSelectedCategoryIds} />
+            <CategoryTable categories={enabledCategories} />
           </CardContent>
         </Card>
       </Grid>

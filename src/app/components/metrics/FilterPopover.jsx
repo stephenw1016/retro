@@ -1,27 +1,55 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Button, Popover } from '@material-ui/core';
+import { Button, Divider, Popover, Typography } from '@material-ui/core';
+import { green, yellow, red } from '@material-ui/core/colors';
 import FilterIcon from '@material-ui/icons/FilterList';
 
 import CategorySelect from '../session/CategorySelect';
 import type { Category } from '../../types';
+import RangeSlider from './RangeSlider';
 
 type Props = {
   categories: Array<Category>,
-  onCategorySelect: any,
-  selectedCategoryIds: Array<string>,
+  filter: any,
+  onChange: any,
 };
 
 const useStyles = makeStyles(theme => ({
+  categorySelect: {
+    height: 'auto',
+  },
+  divider: {
+    margin: theme.spacing(3, 0),
+  },
+  header: {
+    marginBottom: theme.spacing(2),
+  },
   paper: {
-    padding: theme.spacing(2),
+    padding: theme.spacing(4),
+  },
+  positive: {
+    color: green[600],
+  },
+  neutral: {
+    color: yellow[700],
+  },
+  negative: {
+    color: red[500],
   },
 }));
 
 const FilterPopover = (props: Props) => {
-  const { categories, onCategorySelect, selectedCategoryIds } = props;
+  const { categories, filter, onChange } = props;
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
+  const [localFilter, setLocalFilter] = useState(filter);
+  const open = Boolean(anchorEl);
+  const id = open ? 'filter-popover' : undefined;
+  const typographyProps = {
+    className: classes.header,
+    color: 'textSecondary',
+    variant: 'subtitle1',
+  };
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -31,11 +59,20 @@ const FilterPopover = (props: Props) => {
     setAnchorEl(null);
   };
 
-  const open = Boolean(anchorEl);
-  const id = open ? 'simple-popover' : undefined;
+  const handleCategorySelect = (categoryIds) => {
+    onChange({ ...filter, selectedCategoryIds: categoryIds });
+  };
+
+  const handleRangeChange = rangeKey => (value) => {
+    onChange({ ...filter, [rangeKey]: value });
+  };
+
+  const handleApply = () => {
+    onChange(localFilter);
+  };
 
   return (
-    <>
+    <div>
       <Button
         aria-describedby={id}
         color="primary"
@@ -53,14 +90,35 @@ const FilterPopover = (props: Props) => {
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
         transformOrigin={{ vertical: 'top', horizontal: 'center' }}
       >
+        <Typography {...typographyProps}>Filter by Vote %</Typography>
+        <RangeSlider
+          classes={{ root: classes.positive }}
+          label="Positive"
+          onChange={handleRangeChange('positive')}
+          value={filter.positive}
+        />
+        <RangeSlider
+          classes={{ root: classes.neutral }}
+          label="Neutral"
+          onChange={handleRangeChange('neutral')}
+          value={filter.neutral}
+        />
+        <RangeSlider
+          classes={{ root: classes.negative }}
+          label="Negative"
+          onChange={handleRangeChange('negative')}
+          value={filter.negative}
+        />
+        <Divider className={classes.divider} component="hr" light />
+        <Typography {...typographyProps}>Filter by Category</Typography>
         <CategorySelect
-          className={classes.categorySelect}
+          classes={{ root: classes.categorySelect }}
           categories={categories}
-          selectedCategoryIds={selectedCategoryIds}
-          onChange={onCategorySelect}
+          selectedCategoryIds={filter.selectedCategoryIds}
+          onChange={handleCategorySelect}
         />
       </Popover>
-    </>
+    </div>
   );
 };
 

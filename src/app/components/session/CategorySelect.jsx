@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import {
   Box,
   Button,
@@ -15,24 +15,13 @@ import type { Category } from '../../types';
 
 type Props = {
   categories: Array<Category>,
+  classes: any,
   onChange: Function,
   selectedCategoryIds: Array<string>,
 };
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    height: 300,
-    overflow: 'auto',
-    margin: `${theme.spacing(2)}px 0`,
-  },
-  button: {
-    margin: theme.spacing(0, 0.5),
-  },
-}));
-
 const CategorySelect = (props: Props) => {
-  const { categories, onChange, selectedCategoryIds } = props;
-  const classes = useStyles();
+  const { categories, classes, onChange, selectedCategoryIds } = props;
 
   const handleCategoryToggle = id => () => {
     const currentIndex = selectedCategoryIds.indexOf(id);
@@ -108,4 +97,15 @@ const CategorySelect = (props: Props) => {
   );
 };
 
-export default CategorySelect;
+const styles = theme => ({
+  root: {
+    height: 300,
+    overflow: 'auto',
+    margin: `${theme.spacing(2)}px 0`,
+  },
+  button: {
+    margin: theme.spacing(0, 0.5),
+  },
+});
+
+export default withStyles(styles)(CategorySelect);
