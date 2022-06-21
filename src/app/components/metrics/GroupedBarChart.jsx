@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import { green, yellow, red } from '@material-ui/core/colors';
 import {
@@ -20,7 +21,11 @@ const GroupedBarChart = (props: Props) => {
   const { data } = props;
 
   const itemSorter = (a) => {
-    if (a.title === 'positive') return -1;
+    if (a.title === 'positive') {
+      return -1;
+    }
+
+    return 0;
   };
 
   return (

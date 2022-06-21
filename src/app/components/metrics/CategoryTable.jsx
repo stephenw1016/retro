@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -37,7 +38,7 @@ function getSorting(order, orderBy) {
 
 type Props = {
   categories: Array<Category>,
-  onSelect: any,
+  // onSelect: any,
 };
 
 const useStyles = makeStyles(() => ({

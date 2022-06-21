@@ -89,7 +89,10 @@ const Metrics = (props: Props) => {
       && isInRange('negative', dataPoint);
     return filter.selectedCategoryIds.includes(dataPoint.id) && matchesRanges;
   });
-  const filteredIdMap = filteredData.reduce((ids, dataPoint) => ({ ...ids, [dataPoint.id]: dataPoint }), Object.create(null));
+  const filteredIdMap = filteredData.reduce((ids, dataPoint) => ({
+    ...ids,
+    [dataPoint.id]: dataPoint,
+  }), Object.create(null));
   const enabledCategories = session.categories.filter(category => filteredIdMap[category.id]);
 
   const centeredStackedBarTooltip = (

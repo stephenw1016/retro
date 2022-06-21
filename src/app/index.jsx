@@ -3,7 +3,7 @@ import React, { lazy } from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { HashRouter, Route } from 'react-router-dom';
-import { ThemeProvider } from '@material-ui/styles';
+import { MuiThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import 'babel-polyfill';
 
@@ -22,7 +22,7 @@ const SignIn = lazy(() => import('./components/sign-in/SignIn'));
 
 const App = () => (
   <Provider store={store}>
-    <ThemeProvider theme={theme}>
+    <MuiThemeProvider theme={theme}>
       <HashRouter>
         <CssBaseline />
         <Header />
@@ -34,7 +34,7 @@ const App = () => (
         <AuthorizedRoute path={routes.NEW_SESSION} exact component={NewSessionForm} />
         <AuthorizedRoute path={routes.USER_PROFILE} exact component={UserProfile} />
       </HashRouter>
-    </ThemeProvider>
+    </MuiThemeProvider>
   </Provider>
 );
 

@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+// import { makeStyles } from '@material-ui/core/styles';
 import { AppBar, Paper, Toolbar, Typography } from '@material-ui/core';
 
 import type { Session } from '../../types';
@@ -11,15 +11,15 @@ type Props = {
   session: Session,
 }
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    padding: theme.spacing(2),
-  },
-}));
+// const useStyles = makeStyles(theme => ({
+//   root: {
+//     padding: theme.spacing(2),
+//   },
+// }));
 
 const SessionSummary = (props: Props) => {
   const { session } = props;
-  const classes = useStyles();
+  // const classes = useStyles();
 
   return (
     <Paper square elevation={0}>

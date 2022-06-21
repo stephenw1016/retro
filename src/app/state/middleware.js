@@ -11,7 +11,7 @@ export const saveSessionMiddleware = () => next => async (action) => {
 
   const { session } = payload;
   const savedSession = await saveSession(session);
-  console.info('new session added', savedSession);
+  // console.info('new session added', savedSession);
 
   return next(saveSessionSuccess(savedSession));
 };
